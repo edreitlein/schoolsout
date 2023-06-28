@@ -1,0 +1,17 @@
+recommend: for database schema it may be useful to have a "upload time" for administration and a "dates of operation" for searchable camps between certain dates?
+
+TODO:
+
+Search page on database
+
+investigate searching by distance from address/zipcode (ie: "within 10 miles of your location there are x camps")
+
+login page
+    for user login https://www.pluralsight.com/resources/blog/cloud/using-amazon-cognito-for-secure-login-to-your-web-app 
+    amazon cognito could be used?
+
+upload page for listings
+
+
+
+

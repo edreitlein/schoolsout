@@ -1,2 +1,5 @@
 # ignore files in directory 'old'
 old/
+
+#book1
+*.xlsx
