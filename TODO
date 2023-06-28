@@ -12,6 +12,10 @@ login page
 
 upload page for listings
 
+account ID on upload page should not exist, should pull from user account instead
+
+Make a header for navigation
+
 
 
 
