@@ -10,10 +10,11 @@ include "./databaseInit.php";
     <style>
         /* Style for the form container */
 .form-container {
-  max-width: 500px;
-  margin: 0 auto;
+  max-width: 50%;
+  /* overflow-x: hidden; */
+  margin: 100px auto;
   padding: 20px;
-  padding-top:3rem;
+  padding-top:1rem;
   background-color: #f5f5f5;
   border-radius: 5px;
 }
@@ -147,6 +148,7 @@ include "./databaseInit.php";
     <div class="form-container">
     <!-- name is for submitting forms, ID is for DOM elements for javascript-->
     <form action="process_camp_upload.php" method="POST">
+      <!-- <div style="display:inline-block; min-width:45%;"> -->
         <label for="unique_id">Unique ID:</label>
         <input type="text" id="unique_id" name="unique_id" required><br>
         
@@ -182,7 +184,8 @@ include "./databaseInit.php";
         
         <label for="end_time">End Time:</label>
         <input type="text" id="end_time" name="end_time" required><br>
-        
+<!-- </div>
+        <div style="display:inline-block; min-width:45%; "> -->
         <label for="hours_duration">Hours Duration:</label>
         <input type="text" id="hours_duration" name="hours_duration" required><br>
         
@@ -208,6 +211,7 @@ include "./databaseInit.php";
         <textarea id="description" name="description" rows="5" required></textarea><br>
         
         <input type="submit" value="Submit">
+<!-- </div> -->
     </form>
     </div>
 </body>
