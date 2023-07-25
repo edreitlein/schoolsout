@@ -73,6 +73,9 @@ function displaySearchResult($row){
         <label for="name">Camp Name:</label>
         <input type="text" id="name" name="name">
 
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city">
+
         <label for="State">State</label>
         <input type="text" id="state" name="state">
 
@@ -111,10 +114,13 @@ function displaySearchResult($row){
       if(isset($_GET["search"])){
         $name_to_search = $_GET["name"];//the name to search
         $state_to_search = $_GET["state"];
-        $stmt = $mysqli->prepare("SELECT * FROM camp_info WHERE name LIKE ? AND state LIKE ?");
+        $city_to_search = $_GET["city"];
+        
+        $stmt = $mysqli->prepare("SELECT * FROM camp_info WHERE name LIKE ? AND state LIKE ? AND city LIKE ?");
         $name_to_search = '%'.$name_to_search.'%';
         $state_to_search = '%'.$state_to_search.'%';
-        $stmt->bind_param("ss",$name_to_search,$state_to_search);
+        $city_to_search = '%'.$city_to_search.'%';
+        $stmt->bind_param("sss",$name_to_search,$state_to_search,$city_to_search);
         $stmt->execute();
         $result=$stmt->get_result();
 
