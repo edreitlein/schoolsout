@@ -19,3 +19,18 @@ Make a header for navigation
 
 
 
+
+1. For administrative purposes, "Upload Time/Upload Date" may be a useful piece of information to collect. --I agree.
+2. To improve search functionality, it may be useful for camps to specify which dates they are in operation. (example: Camp opens: June 15, Closes: August 15).--Yes, the first day and last day of camp would be very useful.
+3. Should the camps also list the days of the week they are open when uploading to the website?-YES
+
+
+To add as well, we need a day camp/overnight camp delineation.  A user could be searching for one (or both) of these options.
+
+
+Section for when (date) the camp fills up
+Ideally, we have this filled in when the camp is uploaded or shortly thereafter and then update it when (if) the camp fills so the information is accurate for the following year.
+
+camp listing editor
+
+orgnaize TODO and add rest of fields for DB

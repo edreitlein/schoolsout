@@ -130,9 +130,9 @@ include "./databaseInit.php";
   <header>
     <nav class = "navbar">
       
-        <a href="upload.html" class="active">Upload</a>
+        <a href="campUpload.php" class="active">Upload</a>
         <a href="login.html" class="active">Login</a>
-        <a href="search.html" class="active" >Search</a>
+        <a href="search.php" class="active" >Search</a>
       
     </nav>
   </header>
@@ -149,8 +149,8 @@ include "./databaseInit.php";
     <!-- name is for submitting forms, ID is for DOM elements for javascript-->
     <form action="process_camp_upload.php" method="POST">
       <!-- <div style="display:inline-block; min-width:45%;"> -->
-        <label for="unique_id">Unique ID:</label>
-        <input type="text" id="unique_id" name="unique_id" required><br>
+        <!-- <label for="unique_id">Unique ID:</label>
+        <input type="text" id="unique_id" name="unique_id" required><br> -->
         
         <label for="account_id">Account ID:</label>
         <input type="text" id="account_id" name="account_id" required><br>
@@ -174,43 +174,43 @@ include "./databaseInit.php";
         <input type="text" id="activity" name="activity" required><br>
         
         <label for="price">Price:</label>
-        <input type="text" id="price" name="price" required><br>
+        <input type="text" id="price" name="price" ><br>
         
         <label for="ages_served">Ages Served:</label>
-        <input type="text" id="ages_served" name="ages_served" required><br>
+        <input type="text" id="ages_served" name="ages_served" ><br>
         
         <label for="start_time">Start Time:</label>
-        <input type="text" id="start_time" name="start_time" required><br>
+        <input type="text" id="start_time" name="start_time" ><br>
         
         <label for="end_time">End Time:</label>
-        <input type="text" id="end_time" name="end_time" required><br>
+        <input type="text" id="end_time" name="end_time" ><br>
 <!-- </div>
         <div style="display:inline-block; min-width:45%; "> -->
-        <label for="hours_duration">Hours Duration:</label>
-        <input type="text" id="hours_duration" name="hours_duration" required><br>
+        <!-- <label for="hours_duration">Hours Duration:</label>
+        <input type="text" id="hours_duration" name="hours_duration" required><br> -->
         
         <label for="after_care">After Care:</label>
-        <input type="text" id="after_care" name="after_care" required><br>
+        <input type="text" id="after_care" name="after_care" ><br>
         
         <label for="after_care_time_end">After Care Time End:</label>
-        <input type="text" id="after_care_time_end" name="after_care_time_end" required><br>
+        <input type="text" id="after_care_time_end" name="after_care_time_end" ><br>
         
         <label for="price_after_care">Price After Care:</label>
-        <input type="text" id="price_after_care" name="price_after_care" required><br>
+        <input type="text" id="price_after_care" name="price_after_care" ><br>
         
         <label for="food_provided">Food Provided:</label>
-        <input type="text" id="food_provided" name="food_provided" required><br>
+        <input type="text" id="food_provided" name="food_provided" ><br>
         
         <label for="special_needs_accom">Special Needs Accommodation:</label>
-        <input type="text" id="special_needs_accom" name="special_needs_accom" required><br>
+        <input type="text" id="special_needs_accom" name="special_needs_accom" ><br>
         
         <label for="scholarship_opps">Scholarship Opportunities:</label>
-        <input type="text" id="scholarship_opps" name="scholarship_opps" required><br>
+        <input type="text" id="scholarship_opps" name="scholarship_opps" ><br>
         
         <label for="description">Description:</label><br>
-        <textarea id="description" name="description" rows="5" required></textarea><br>
+        <textarea id="description" name="description" rows="5" ></textarea><br>
         
-        <input type="submit" value="Submit">
+        <input type="submit" value="Submit" name="submit">
 <!-- </div> -->
     </form>
     </div>
