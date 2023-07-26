@@ -1,6 +1,11 @@
 <?php
 include "./databaseInit.php";
 
+function yesNoDisplay($rowVar){
+    return $rowVar ? 'Yes' : 'No';
+
+}
+
 function displaySearchResult($row){
 
     
@@ -19,12 +24,12 @@ function displaySearchResult($row){
         echo "<td>" . $row["start_time"] . "</td>";
         echo "<td>" . $row["end_time"] . "</td>";
         echo "<td>" . $row["hours_duration"] . "</td>";
-        echo "<td>" . $row["after_care"] . "</td>";
+        echo "<td>" . yesNoDisplay($row["after_care"]) . "</td>";//this should be t/f and display as Yes/No
         echo "<td>" . $row["after_care_time_end"] . "</td>";
         echo "<td>" . $row["price_after_care"] . "</td>";
-        echo "<td>" . $row["food_provided"] . "</td>";//this should be t/f
-        echo "<td>" . $row["special_needs_accom"] . "</td>";
-        echo "<td>" . $row["scholarship_opps"] . "</td>";
+        echo "<td>" . yesNoDisplay($row["food_provided"]) . "</td>";//this should be t/f and display as Yes/No
+        echo "<td>" . yesNoDisplay($row["special_needs_accom"]) . "</td>";//this should be t/f and display as Yes/No
+        echo "<td>" . yesNoDisplay($row["scholarship_opps"]) . "</td>";//this should be t/f and display as Yes/No
         echo "<td>" . $row["description"] . "</td>";
         echo "</tr>";
 
@@ -41,6 +46,7 @@ function displaySearchResult($row){
 <head>
   <title>Search</title>
   
+  
 
 <style>
 
@@ -52,6 +58,7 @@ function displaySearchResult($row){
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin:auto;
+    margin-top: 4rem;
     
   }
   .centered-table {
@@ -65,6 +72,7 @@ function displaySearchResult($row){
 }
 
   </style>
+  <header><?php include "./header.php"; ?></header>
 </head>
 <body>
   <div class="centered-form">
@@ -79,7 +87,20 @@ function displaySearchResult($row){
         <label for="State">State</label>
         <input type="text" id="state" name="state">
 
+        <label for="Zipcode">Zipcode</label>
+        <input type="text" id="zipcode" name="zipcode">
+            <div style="padding: 2px; border: 1px solid black; display: inline-block;">
+                <!-- <label>Price</lable> -->
+                <!-- <br> -->
+                <label for="minPrice">Minimum Price:</label>
+                <input type="number" id="minPrice" name="minPrice" min="0" step="0.01"> to
+            
+                <label for="maxPrice">Maximum Price:</label>
+                <input type="number" id="maxPrice" name="maxPrice" min="0" step="0.01">
+            </div>
+
         <input type="submit" value="Submit" name="search">
+        <input type="submit" value="See All Entries" name="seeAll">
       
     </form>
   </div>
@@ -115,12 +136,18 @@ function displaySearchResult($row){
         $name_to_search = $_GET["name"];//the name to search
         $state_to_search = $_GET["state"];
         $city_to_search = $_GET["city"];
+        $zipcode_to_search = $_GET["zipcode"];
+        $minPrice = $_GET['minPrice'];
+        $maxPrice = $_GET['maxPrice'];
         
-        $stmt = $mysqli->prepare("SELECT * FROM camp_info WHERE name LIKE ? AND state LIKE ? AND city LIKE ?");
+        $stmt = $mysqli->prepare("SELECT * FROM camp_info WHERE name LIKE ? AND state LIKE ? AND city LIKE ? AND zipcode LIKE ? AND price <= ?");
         $name_to_search = '%'.$name_to_search.'%';
         $state_to_search = '%'.$state_to_search.'%';
         $city_to_search = '%'.$city_to_search.'%';
-        $stmt->bind_param("sss",$name_to_search,$state_to_search,$city_to_search);
+        $zipcode_to_search = '%'.$zipcode_to_search.'%';
+//AND price >= ? 
+        // $minPrice = '%'.$minPrice.'%'; $minPrice,
+        $stmt->bind_param("sssss",$name_to_search,$state_to_search,$city_to_search,$zipcode_to_search,$maxPrice);
         $stmt->execute();
         $result=$stmt->get_result();
 

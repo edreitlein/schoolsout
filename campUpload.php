@@ -127,7 +127,7 @@ include "./databaseInit.php";
 
   <title>My Website</title>
 
-  <header>
+  <!-- <header>
     <nav class = "navbar">
       
         <a href="campUpload.php" class="active">Upload</a>
@@ -135,8 +135,8 @@ include "./databaseInit.php";
         <a href="search.php" class="active" >Search</a>
       
     </nav>
-  </header>
-
+  </header> -->
+<?php include "./header.php"; ?>
 </head>
 <body> 
 

@@ -1,7 +1,7 @@
 <?php
 //initializes database, this should be included in all files needing database access
 //and this file should be changed when database needs to be updated
-
+//use include "./databaseInit.php";
 
 //for databases, comment out development or deployment for what youre working on
 //it might be worthwhile to untrack this as long as you do not move heroku hosts, and then uncomment development for ease-of-access

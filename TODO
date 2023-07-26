@@ -34,3 +34,8 @@ Ideally, we have this filled in when the camp is uploaded or shortly thereafter 
 camp listing editor
 
 orgnaize TODO and add rest of fields for DB
+
+
+make individual pages that are clickable for camp entries : ie from listing -> click listing -> go to page that has more info
+
+NULL zipcodes present issues, should we make them a required field or just autopopulate them with 00000?
