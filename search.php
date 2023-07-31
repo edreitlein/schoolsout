@@ -98,6 +98,17 @@ function displaySearchResult($row){
                 <label for="maxPrice">Maximum Price:</label>
                 <input type="number" id="maxPrice" name="maxPrice" min="0" step="0.01">
             </div>
+            <br>
+        <label for="Activity">Activity</label>
+        <input type="text" id="activity" name="activity">
+
+        <label for="startTime">Start Time</label>
+        <input type="time" id="startTime" name="startTime">
+
+        <label for="endTime">End Time</label>
+        <input type="time" id="endTime" name="endTime">
+
+
 
         <input type="submit" value="Submit" name="search">
         <input type="submit" value="See All Entries" name="seeAll">
@@ -133,21 +144,119 @@ function displaySearchResult($row){
     <?php //search area
 
       if(isset($_GET["search"])){
+
+
+        
+        // $sql_query = "SELECT * FROM camp_info WHERE";
+        // $params = "";
+
         $name_to_search = $_GET["name"];//the name to search
         $state_to_search = $_GET["state"];
         $city_to_search = $_GET["city"];
         $zipcode_to_search = $_GET["zipcode"];
         $minPrice = $_GET['minPrice'];
         $maxPrice = $_GET['maxPrice'];
+        $activity_to_search = $_GET["activity"];
+        $startTime = $_GET["startTime"];
+        $endTime = $_GET["endTime"];
+        // echo $activity_to_search;
+
+        $sql = [];
+        $parameters = [];
+
+        if ($name_to_search) {
+          $sql[] = " name LIKE ?";
+          $name_to_search = '%'.$name_to_search.'%';
+          $parameters[] = $name_to_search;
+          // echo print_r($parameters);
+        }
+        if ($state_to_search) {
+          $sql[] = " state LIKE ?";
+          $state_to_search = '%'.$state_to_search.'%';
+          $parameters[] = $state_to_search;
+          // echo print_r($parameters);
+        }
+        if ($city_to_search) {
+          $sql[] = " city LIKE ?";
+          $city_to_search = '%'.$city_to_search.'%';
+          $parameters[] = $city_to_search;
+          // echo print_r($parameters);
+        }
+        if ($zipcode_to_search) {
+          $sql[] = " zipcode LIKE ?";
+          // $zipcode_to_search = $zipcode_to_search;//searches exact zipcode only
+          $parameters[] = $zipcode_to_search;
+          // echo print_r($parameters);
+        }
+        if (isset($_GET['minPrice']) and $_GET['minPrice']) {
+          echo 'min';
+          $sql[] = " price >= ?";
+          $minPrice = $minPrice;//searches minimim price
+          $parameters[] = $minPrice;
+          // echo print_r($parameters);
+        }
+        if (isset($_GET['maxPrice']) and $_GET['maxPrice']) {//could remove isset 
+          echo 'max';
+          $sql[] = " price <= ?";
+          $maxPrice = $maxPrice;//searches minimim price
+          $parameters[] = $maxPrice;
+          // echo print_r($parameters);
+        }
+        if ($activity_to_search) {
+          // echo "act";
+          $sql[] = " activity LIKE ?";
+          $activity_to_search = '%'.$activity_to_search.'%';
+          $parameters[] = $activity_to_search;
+          // echo print_r($parameters);
+        }
+        if ($startTime){
+          // echo $startTime;
+          $sql[] = " start_time = ?";
+          // $activit = $activity_to_search;
+          $parameters[] = $startTime;
+        }
+        if ($endTime){
+          // echo $endTime;
+          $sql[] = " end_time = ?";
+          // $activit = $activity_to_search;
+          $parameters[] = $endTime;
+        }
         
-        $stmt = $mysqli->prepare("SELECT * FROM camp_info WHERE name LIKE ? AND state LIKE ? AND city LIKE ? AND zipcode LIKE ? AND price <= ?");
-        $name_to_search = '%'.$name_to_search.'%';
-        $state_to_search = '%'.$state_to_search.'%';
-        $city_to_search = '%'.$city_to_search.'%';
-        $zipcode_to_search = '%'.$zipcode_to_search.'%';
+
+
+        $query = "SELECT * FROM camp_info";
+        if ($sql) {
+          $query .= ' WHERE ' . implode(' AND ', $sql);
+        }
+
+        $stmt = $mysqli->prepare($query);
+
+        if ($parameters) {
+          
+          $stmt->bind_param((str_repeat('s', count($parameters))), ...$parameters);
+        }
+
+        // if(isset($_GET["name"])){//i can use this with concatnation to build a better search query
+        //   $sql_query .=" name LIKE ?";
+        //   $params .="s";
+          
+        // }
+        // echo $sql_query;
+        // echo $params;
+        
+        // $stmt = $mysqli->prepare("SELECT * FROM camp_info WHERE name LIKE ? AND state LIKE ? AND city LIKE ? AND zipcode LIKE ? AND price <= ?");
+        // $stmt = $mysqli->prepare($sql_query);
+        // $name_to_search = '%'.$name_to_search.'%';
+        // $state_to_search = '%'.$state_to_search.'%';
+        // $city_to_search = '%'.$city_to_search.'%';
+        // $zipcode_to_search = '%'.$zipcode_to_search.'%';
 //AND price >= ? 
         // $minPrice = '%'.$minPrice.'%'; $minPrice,
-        $stmt->bind_param("sssss",$name_to_search,$state_to_search,$city_to_search,$zipcode_to_search,$maxPrice);
+        //  $stmt->bind_param($params,$name_to_search,$state_to_search,$city_to_search,$zipcode_to_search,$maxPrice);
+        
+
+        
+        // $stmt->bind_param($params,);
         $stmt->execute();
         $result=$stmt->get_result();
 
