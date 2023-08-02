@@ -117,9 +117,58 @@ function displaySearchResult($row){
         <label for="endTime">End Time</label>
         <input type="time" id="endTime" name="endTime">
 
+        <div style="padding: 2px; border: 1px solid black; display: inline-block;">
+        <label for="Aftercare">Aftercare:</label>
+        <input type="checkbox" id="aftercare" name="aftercare" value="aftercare">
+        <!-- The 'id' and 'for' attributes associate the label with the checkbox -->
+</div>
+        <div style="padding: 2px; border: 1px solid black; display: inline-block;">
+        <label for="food_provided">Food Provided:</label>
+        <input type="checkbox" id="food_provided" name="food_provided" value="food_provided">
+        </div>
+
+        <div style="padding: 2px; border: 1px solid black; display: inline-block;">
+        <label for="special_needs_accom">Special Needs Accomidations:</label>
+        <input type="checkbox" id="special_needs_accom" name="special_needs_accom" value="special_needs_accom">
+        </div>
+
+        <div style="padding: 2px; border: 1px solid black; display: inline-block;">
+        <label for="scholarship_opps">Scholarship Opportunities:</label>
+        <input type="checkbox" id="scholarship_opps" name="scholarship_opps" value="scholarship_opps">
+        </div>
+
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date" name="camp_start_date">
+
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date" name="camp_end_date">
+
+        <br>
+        <div style="padding: 2px; border: 1px solid black; display: inline-block;">
+        <label for="sunday">Sunday</label>
+        <input type="checkbox" id="sunday" name="sunday" value="Sunday">
+        
+        <label for="monday">Monday</label>
+        <input type="checkbox" id="monday" name="monday" value="Monday">
+        
+        <label for="tuesday">Tuesday</label>
+        <input type="checkbox" id="tuesday" name="tuesday" value="Tuesday">
+        
+        <label for="wednesday">Wednesday</label>
+        <input type="checkbox" id="wednesday" name="wednesday" value="Wednesday">
+        
+        <label for="thursday">Thursday</label>
+        <input type="checkbox" id="thursday" name="thursday" value="Thursday">
+        
+        <label for="friday">Friday</label>
+        <input type="checkbox" id="friday" name="friday" value="Friday">
+        
+        <label for="saturday">Saturday</label>
+        <input type="checkbox" id="saturday" name="saturday" value="Saturday">
+        </div>
 
 
-        <input type="submit" value="Submit" name="search">
+        <br><input type="submit" value="Submit" name="search">
         <input type="submit" value="See All Entries" name="seeAll">
       
     </form>
@@ -172,6 +221,9 @@ function displaySearchResult($row){
         $activity_to_search = $_GET["activity"];
         $startTime = $_GET["startTime"];
         $endTime = $_GET["endTime"];
+        $camp_start_date = $_GET["camp_start_date"];
+        $camp_end_date = $_GET["camp_end_date"];
+        // $aftercare = $_GET["aftercare"];
         // echo $activity_to_search;
 
         $sql = [];
@@ -234,6 +286,93 @@ function displaySearchResult($row){
           // $activit = $activity_to_search;
           $parameters[] = $endTime;
         }
+
+        if(isset($_GET["aftercare"])){
+          $sql[] = " after_care = 1";
+        }
+
+        if(isset($_GET["food_provided"])){
+          $sql[] = " food_provided = 1";
+        }
+
+        if(isset($_GET["special_needs_accom"])){
+          $sql[] = " special_needs_accom = 1";
+        }
+
+        if(isset($_GET["scholarship_opps"])){
+          $sql[] = " scholarship_opps = 1";
+        }
+
+        if($camp_start_date){
+          $sql[] = " camp_start_date = ?";
+
+          $parameters[] = $camp_start_date;
+        }
+
+        if($camp_end_date){
+          $sql[] = " camp_end_date = ?";
+
+          $parameters[] = $camp_end_date;
+        }
+
+        $daySearch = FALSE;
+        $daySearchParam=[];
+        if(isset($_GET["sunday"])){
+          $daySearch=TRUE;
+          $daySearchParam[]= "S";
+
+          // echo "sunday checked";
+        }
+        if(isset($_GET["monday"])){
+          $daySearch=TRUE;
+          $daySearchParam[]= "M";
+        }
+        if(isset($_GET["tuesday"])){
+          $daySearch=TRUE;
+          $daySearchParam[]= "T";
+
+        }
+        if(isset($_GET["wednesday"])){
+          $daySearch=TRUE;
+          $daySearchParam[]= "W";
+        }
+        if(isset($_GET["thursday"])){
+          $daySearch=TRUE;
+          $daySearchParam[] ="R";
+        }
+        if(isset($_GET["friday"])){
+          $daySearch=TRUE;
+          $daySearchParam[] ="F";
+        }
+        if(isset($_GET["saturday"])){
+          $daySearch=TRUE;
+          $daySearchParam[] ="U";
+        }
+        
+
+
+        if($daySearch){
+
+          foreach($daySearchParam as $day){
+            $sql[] = " camp_days_of_week LIKE ?";
+
+            $parameters[] = "%".$day."%";
+            
+          }
+
+          // echo print_r($daySearchParam);
+          // $sql[] = " camp_days_of_week LIKE ?";
+
+          // $parameters[] = "%".$daySearchParam."%";
+
+
+        }
+        
+
+
+
+
+        
         
 
 //  WHERE camp_visible = 1
