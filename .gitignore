@@ -3,3 +3,7 @@ old/
 
 #book1
 *.xlsx
+*.csv
+
+#database schema
+/databaseSchema.txt

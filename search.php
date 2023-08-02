@@ -31,7 +31,16 @@ function displaySearchResult($row){
         echo "<td>" . yesNoDisplay($row["special_needs_accom"]) . "</td>";//this should be t/f and display as Yes/No
         echo "<td>" . yesNoDisplay($row["scholarship_opps"]) . "</td>";//this should be t/f and display as Yes/No
         echo "<td>" . $row["description"] . "</td>";
+        echo "<td>" . $row["camp_start_date"]."</td>";
+        echo "<td>" . $row["camp_end_date"]."</td>";
+        echo "<td>" . $row["camp_fill_date"]."</td>";
+        echo "<td>" . $row["camp_days_of_week"]."</td>";
         echo "</tr>";
+
+        //  <th>Start Date</th>
+    // <th>End Date</th>
+    // <th>Fill Date</th>
+    // <th>Days Of Week</th></tr>
 
         // Add more echo statements for other columns as needed
         // echo "</td>";
@@ -137,7 +146,11 @@ function displaySearchResult($row){
     <th>Food Provided</th>
     <th>Special Needs Accommodation</th>
     <th>Scholarship Opportunities</th>
-    <th>Description</th></tr>
+    <th>Description</th>
+    <th>Start Date</th>
+    <th>End Date</th>
+    <th>Fill Date</th>
+    <th>Days Of Week</th></tr>
 
     <!-- php here for building search result information -->
 
@@ -223,10 +236,11 @@ function displaySearchResult($row){
         }
         
 
-
-        $query = "SELECT * FROM camp_info";
+//  WHERE camp_visible = 1
+        $query = "SELECT * FROM camp_info WHERE camp_visible = 1";
         if ($sql) {
-          $query .= ' WHERE ' . implode(' AND ', $sql);
+          $query .= ' AND ' . implode(' AND ', $sql);
+          // $query .= implode(' AND ', $sql);
         }
 
         $stmt = $mysqli->prepare($query);
