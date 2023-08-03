@@ -209,6 +209,53 @@ include "./databaseInit.php";
         
         <label for="description">Description:</label><br>
         <textarea id="description" name="description" rows="5" ></textarea><br>
+
+        <!-- below unadded with process_camp_upload -->
+
+        <label for="camp_start_date">Start Date:</label>
+        <input type="date" id="camp_start_date" name="camp_start_date"><br>
+        
+        <label for="camp_end_date">End Date:</label>
+        <input type="date" id="camp_end_date" name="camp_end_date"><br>
+
+        <div title="The date the camp is likely to fill up, or stop accepting new campers.">
+        <label title="The date the camp is likely to fill up, or stop accepting new campers." for="camp_fill_date">Camp Fill Date:</label>
+        <input type="date" id="camp_fill_date" name="camp_fill_date"><br>
+        </div>
+
+        <label>Days of Week Camp is Open:</label>
+        <div style="padding: 2px; border: 1px solid black; display: inline-flex;">
+        <label for="sunday">Sunday</label>
+        <input type="checkbox" id="sunday" name="sunday" value="Sunday">
+        
+        <label for="monday">Monday</label>
+        <input type="checkbox" id="monday" name="monday" value="Monday">
+        
+        <label for="tuesday">Tuesday</label>
+        <input type="checkbox" id="tuesday" name="tuesday" value="Tuesday">
+        
+        <label for="wednesday">Wednesday</label>
+        <input type="checkbox" id="wednesday" name="wednesday" value="Wednesday">
+        
+        <label for="thursday">Thursday</label>
+        <input type="checkbox" id="thursday" name="thursday" value="Thursday">
+        
+        <label for="friday">Friday</label>
+        <input type="checkbox" id="friday" name="friday" value="Friday">
+        
+        <label for="saturday">Saturday</label>
+        <input type="checkbox" id="saturday" name="saturday" value="Saturday">
+        </div><br>
+
+        <label for="camp_visible">If the camp is searchable:</label>
+        <select id="camp_visible" name="camp_visible">
+            <option value=0>Hidden</option>
+            <option value=1>Shown</option>
+        </select><br>
+
+
+
+
         
         <input type="submit" value="Submit" name="submit">
 <!-- </div> -->
