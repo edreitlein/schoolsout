@@ -253,6 +253,9 @@ include "./databaseInit.php";
             <option value=1>Shown</option>
         </select><br>
 
+        <label for="website_link">Website:</label>
+        <input type="text" id="website_link" name="website_link" ><br>
+
 
 
 

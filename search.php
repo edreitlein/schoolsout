@@ -35,6 +35,7 @@ function displaySearchResult($row){
         echo "<td>" . $row["camp_end_date"]."</td>";
         echo "<td>" . $row["camp_fill_date"]."</td>";
         echo "<td>" . $row["camp_days_of_week"]."</td>";
+        echo "<td>" . $row["website_link"]."</td>";
         echo "</tr>";
 
         //  <th>Start Date</th>
@@ -199,7 +200,8 @@ function displaySearchResult($row){
     <th>Start Date</th>
     <th>End Date</th>
     <th>Fill Date</th>
-    <th>Days Of Week</th></tr>
+    <th>Days Of Week</th>
+    <th>Website</th></tr>
 
     <!-- php here for building search result information -->
 
