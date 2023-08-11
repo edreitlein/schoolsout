@@ -137,6 +137,58 @@ include "./databaseInit.php";
     </nav>
   </header> -->
 <?php include "./header.php"; ?>
+<?php
+
+$nameErr=$priceErr="";
+
+
+// post submit db checking and uploading
+
+function test_input($data){
+
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+
+  return $data;
+}
+
+// echo test_input($_POST['name']);
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+  // echo "page from POST";
+
+  if (empty($_POST["name"])) {
+    $nameErr = "Name is required";
+  }else{
+    $name = test_input($_POST["name"]);
+    if (!preg_match("/^[A-Za-z0-9\s\-]*$/",$name)) {
+      $nameErr = "Only Letters, Numbers, Dashes and white space allowed";
+    }
+  }
+
+  if (!empty($_POST['price'])){
+    // echo "something";
+    $price = test_input($_POST['price']);
+
+  }else{
+    $price="";
+  }
+
+
+  
+
+
+}
+
+
+
+
+
+
+?>
 </head>
 <body> 
 
@@ -147,34 +199,38 @@ include "./databaseInit.php";
 
     <div class="form-container">
     <!-- name is for submitting forms, ID is for DOM elements for javascript-->
-    <form action="process_camp_upload.php" method="POST">
+    <!-- process_camp_upload.php" -->
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST"> 
       <!-- <div style="display:inline-block; min-width:45%;"> -->
         <!-- <label for="unique_id">Unique ID:</label>
         <input type="text" id="unique_id" name="unique_id" required><br> -->
+        <span style="color:red;">* required field</span>
         
-        <label for="account_id">Account ID:</label>
-        <input type="text" id="account_id" name="account_id" required><br>
+        <label for="account_id">*Account ID:</label>
+        <input type="text" id="account_id" name="account_id"><br>
         
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
+        <label for="name">*Name:</label>
+        <input type="text" id="name" name="name" required>
+        <?php echo "<span style='color:red;'>$nameErr</span>" ?>
+        <!-- <br> -->
         
-        <label for="street_address">Street Address:</label>
+        <!-- <label for="street_address">*Street Address:</label>
         <input type="text" id="street_address" name="street_address" required><br>
         
-        <label for="city">City:</label>
+        <label for="city">*City:</label>
         <input type="text" id="city" name="city" required><br>
         
-        <label for="state">State:</label>
+        <label for="state">*State:</label>
         <input type="text" id="state" name="state" required><br>
         
-        <label for="zipcode">Zipcode:</label>
+        <label for="zipcode">*Zipcode:</label>
         <input type="text" id="zipcode" name="zipcode" required><br>
         
-        <label for="activity">Activity:</label>
-        <input type="text" id="activity" name="activity" required><br>
+        <label for="activity">*Activity:</label>
+        <input type="text" id="activity" name="activity" required><br> -->
         
         <label for="price">Price:</label>
-        <input type="text" id="price" name="price" ><br>
+        <input type="number" id="price" name="price" step="0.01" min="0"><br>
         
         <label for="ages_served">Ages Served:</label>
         <input type="text" id="ages_served" name="ages_served" ><br>
@@ -266,3 +322,11 @@ include "./databaseInit.php";
     </div>
 </body>
 </html>
+<?php
+if(isset($name)){
+  echo $name."<br>";
+}
+if(isset($price)){
+echo $price;
+}
+?>
