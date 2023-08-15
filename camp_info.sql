@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 10, 2023 at 09:30 PM
+-- Generation Time: Aug 15, 2023 at 09:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -68,7 +68,8 @@ INSERT INTO `camp_info` (`camp_id`, `account_id`, `name`, `street_address`, `cit
 (7, 14321, 'test3', 'test3', 'test3', 'NY', '143214', 'test3', 0.00, '', '00:00:00', '00:00:00', NULL, 0, NULL, 0.00, 0, 0, 0, '', '2023-08-01 23:28:26', NULL, NULL, NULL, NULL, 1, NULL),
 (8, 564, 'special needs accom camp', '4232', 'test city', 'NJ', '22222', 'hiking', 700.00, '10', '11:11:51', '14:45:00', NULL, 0, NULL, NULL, 0, 1, 0, 'special needs accom camp test', '2023-08-02 20:13:31', '2023-08-07', '2023-08-23', '2023-08-01', 'SU', 1, NULL),
 (9, 1, '1', '1', '1', '1', '1', '1', 1.00, '', '00:00:00', '00:00:00', NULL, 0, NULL, 0.00, 0, 0, 0, 'camp new upload', '2023-08-03 22:27:19', '2023-08-03', '2023-08-24', '2023-08-01', 'SMWR', 1, NULL),
-(10, 0, 'test4', 'test4', 'test4', 'HW', '12345', 'test4', 0.00, '', '00:00:00', '00:00:00', NULL, 0, NULL, 0.00, 0, 0, 0, '', '2023-08-04 21:46:28', '2023-08-01', '2023-08-05', '2023-07-31', 'SMFU', 1, 'www.test4.com');
+(10, 0, 'test4', 'test4', 'test4', 'HW', '12345', 'test4', 0.00, '', '00:00:00', '00:00:00', NULL, 0, NULL, 0.00, 0, 0, 0, '', '2023-08-04 21:46:28', '2023-08-01', '2023-08-05', '2023-07-31', 'SMFU', 1, 'www.test4.com'),
+(12, 14321, 'test city 1-5', '123 test street', 'test city', 'WA', '12345', 'testing', 23.45, '14', '09:00:00', '10:00:00', NULL, 0, NULL, 0.00, 0, 0, 0, '', '2023-08-15 19:07:57', '0000-00-00', '0000-00-00', '0000-00-00', 'MTF', 1, '');
 
 --
 -- Indexes for dumped tables
@@ -88,7 +89,7 @@ ALTER TABLE `camp_info`
 -- AUTO_INCREMENT for table `camp_info`
 --
 ALTER TABLE `camp_info`
-  MODIFY `camp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `camp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
