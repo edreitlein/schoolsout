@@ -2,6 +2,39 @@ recommend: for database schema it may be useful to have a "upload time" for admi
 
 TODO:
 
+
+    UPLOAD:
+            state -> 2char abbrev dropdown menu
+            start time ui -> clock
+            end time ui -> clock
+            after care -> yes/no dropdown
+            after care end time -> clock
+            food provided -> yes/no dropdown
+            special needs accom -> yes/no dropdown
+            scholarship opps -> yes/no dropdown
+
+
+            Account ID field removal once login
+
+    DATABASE: Add day/night camp delination, a user can search for either or both
+
+    DATABASE: Add "Parent Listing" indication for larger camps (True/False)
+
+    SEARCH: Add searchable for parent listings and day/night camp delination
+
+    UPLOAD: Add fields for parental listings and day/night 
+
+    PAGES: Make camp listing pages clickable and populate with their own data
+
+    PAGES: Camp listing editor
+
+    DATABASE/USER: User login
+
+
+
+===========================
+            OLD
+===========================
 Search page on database
 
 investigate searching by distance from address/zipcode (ie: "within 10 miles of your location there are x camps")

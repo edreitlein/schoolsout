@@ -139,7 +139,7 @@ include "./databaseInit.php";
 <?php include "./header.php"; ?>
 <?php
 
-$nameErr=$priceErr="";
+$nameErr=$priceErr=$streetErr=$cityErr=$stateErr=$zipcodeErr="";
 
 
 // post submit db checking and uploading
@@ -157,6 +157,7 @@ function test_input($data){ //removes possibility of xss attacks server-side
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $hasError = 0;
 
   // echo "page from POST";
 
@@ -165,27 +166,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }else{
     $name = test_input($_POST["name"]);
     if (!preg_match("/^[A-Za-z0-9\s\-]*$/",$name)) {
+      $hasError = 1;
       $nameErr = "Only Letters, Numbers, Dashes and white space allowed";
     }
   }
 
   if(!empty($_POST['street_address'])){
     $_POST['street_address'] = test_input($_POST['street_address']);
+    if (!preg_match("/^[A-Za-z0-9\s]*$/",$_POST['street_address'])) {
+      $hasError = 1;
+      $streetErr = "Only Letters, Numbers, and white space allowed";
+    }
 
+
+  }else{
+    $hasError = 1;
+    $streetErr="Street Address is required";
   }
 
   if(!empty($_POST['city'])){
     $_POST['city'] = test_input($_POST['city']);
+    if (!preg_match("/^[A-Za-z0-9\s]*$/",$_POST['city'])) {
+      $hasError = 1;
+      $cityErr = "Only Letters, Numbers, and white space allowed";
+    }
 
+  }else{
+    $hasError=1;
+    $cityErr ="City is required";
   }
+
   if(!empty($_POST['state'])){
     $_POST['state'] = test_input($_POST['state']);
+    if (!preg_match("/^[A-Z]{2}$/",$_POST['state'])) {
+      $hasError = 1;
+      $stateErr = "Only 2 Letter State Abbreviations allowed";
+    }
 
+  }else{
+    $hasError=1;
+    $stateErr="State is required";
   }
 
   if(!empty($_POST['zipcode'])){
     $_POST['zipcode'] = test_input($_POST['zipcode']);
+    if (!preg_match("/^[0-9]{5}$/",$_POST['zipcode'])) {
+      $hasError = 1;
+      $zipcodeErr = "Only exactly 5 numbers allowed";
+    }
 
+  }else{
+    $hasError=1;
+    $zipcodeErr="Zipcode is required";
   }
   if(!empty($_POST['activity'])){
     $_POST['activity'] = test_input($_POST['activity']);
@@ -292,6 +324,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
+// post data-validation to prevent xss and sql injection, now sending to db
+
+        $camp_days_of_week='';
+        if(isset($_POST["sunday"])){
+        //   $daySearch=TRUE;
+          $camp_days_of_week.= "S";
+
+          // echo "sunday checked";
+        }
+        if(isset($_POST["monday"])){
+        //   $daySearch=TRUE;
+          $camp_days_of_week.= "M";
+        }
+        if(isset($_POST["tuesday"])){
+        //   $daySearch=TRUE;
+          $camp_days_of_week.= "T";
+
+        }
+        if(isset($_POST["wednesday"])){
+        //   $daySearch=TRUE;
+          $camp_days_of_week.= "W";
+        }
+        if(isset($_POST["thursday"])){
+        //   $daySearch=TRUE;
+          $camp_days_of_week.="R";
+        }
+        if(isset($_POST["friday"])){
+        //   $daySearch=TRUE;
+          $camp_days_of_week.="F";
+        }
+        if(isset($_POST["saturday"])){
+        //   $daySearch=TRUE;
+          $camp_days_of_week.="U";
+        }
+
+
+        if($hasError == 0){
+        $insertQuery = "INSERT INTO camp_info (account_id,name, street_address,city,state,zipcode,activity,price,ages_served, start_time,end_time,after_care,after_care_time_end,price_after_care,food_provided,special_needs_accom,scholarship_opps,description,camp_start_date,camp_end_date,camp_fill_date,camp_days_of_week,camp_visible,website_link) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";//may have to work with current_timestamp
+        $stmd = $mysqli->prepare($insertQuery);
+        $stmd->bind_param("issssssdsssisdiiisssssis",$_POST["account_id"],$name,$_POST['street_address'],$_POST['city'],$_POST['state'],$_POST['zipcode'],$_POST['activity'], $price, $_POST['ages_served'], $_POST['start_time'], $_POST['end_time'], $_POST['after_care'], $_POST['after_care_end_time'], $_POST['price_after_care'], $_POST['food_provided'], $_POST['special_needs_accom'], $_POST['scholarship_opps'], $_POST['description'],$_POST['camp_start_date'],$_POST['camp_end_date'],$_POST['camp_fill_date'],$camp_days_of_week,$_POST['camp_visible'],$_POST['website_link']);
+        if($stmd->execute()){ 
+            echo '<script>alert("listing uploaded!")
+            const waitFunction = async () => {
+                await delay(3000);
+                console.log("Waited 3s");
+              
+                
+              };
+            window.location.replace("./campUpload.php");
+            </script>';
+
+        }else{
+            echo "<br>Failed<br>Contact local admin<br>";
+            echo($stmd->error);
+        }
+      }else{
+        echo '<script>alert("Please comply with upload standards!")
+            const waitFunction = async () => {
+                await delay(3000);
+                
+              
+                
+              };
+            
+            </script>';
+
+      }
+
 
 
 
@@ -330,20 +430,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" id="account_id" name="account_id"><br>
         
         <label for="name">*Name:</label>
-        <input type="text" id="name" name="name" required>
         <?php echo "<span style='color:red;'>$nameErr</span>" ?>
+        <input type="text" id="name" name="name" required>
+        
         <!-- <br> -->
         
         <label for="street_address">*Street Address:</label>
+        <?php echo "<span style='color:red;'>$streetErr</span>" ?>
         <input type="text" id="street_address" name="street_address" required><br>
         
         <label for="city">*City:</label>
+        <?php echo "<span style='color:red;'>$cityErr</span>" ?>
         <input type="text" id="city" name="city" required><br>
         
         <label for="state">*State:</label>
+        <?php echo "<span style='color:red;'>$stateErr</span>" ?>
         <input type="text" id="state" name="state" required><br>
         
         <label for="zipcode">*Zipcode:</label>
+        <?php echo "<span style='color:red;'>$zipcodeErr</span>" ?>
         <input type="text" id="zipcode" name="zipcode" required><br>
         
         <label for="activity">*Activity:</label>
@@ -430,7 +535,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </select><br>
 
         <label for="website_link">Website:</label>
-        <input type="text" id="website_link" name="website_link" ><br>
+        <input type="website" id="website_link" name="website_link" ><br>
 
 
 
@@ -452,6 +557,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // echo $_POST['ages_served'];
 
-print_r($_POST)
+// print_r($_POST)
 
 ?>
