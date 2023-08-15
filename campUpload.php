@@ -144,7 +144,7 @@ $nameErr=$priceErr="";
 
 // post submit db checking and uploading
 
-function test_input($data){
+function test_input($data){ //removes possibility of xss attacks server-side
 
   $data = trim($data);
   $data = stripslashes($data);
@@ -169,6 +169,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
+  if(!empty($_POST['street_address'])){
+    $_POST['street_address'] = test_input($_POST['street_address']);
+
+  }
+
+  if(!empty($_POST['city'])){
+    $_POST['city'] = test_input($_POST['city']);
+
+  }
+  if(!empty($_POST['state'])){
+    $_POST['state'] = test_input($_POST['state']);
+
+  }
+
+  if(!empty($_POST['zipcode'])){
+    $_POST['zipcode'] = test_input($_POST['zipcode']);
+
+  }
+  if(!empty($_POST['activity'])){
+    $_POST['activity'] = test_input($_POST['activity']);
+
+  }
+
+
+
   if (!empty($_POST['price'])){
     // echo "something";
     $price = test_input($_POST['price']);
@@ -176,6 +201,101 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }else{
     $price="";
   }
+
+  if(!empty($_POST['ages_served'])){
+    $_POST['ages_served']=test_input($_POST['ages_served']);
+
+  }else{
+    $_POST['ages_served'] = "";
+  }
+
+  if(!empty($_POST['start_time'])){
+    $_POST['start_time'] = test_input($_POST['start_time']);
+
+  }else{
+    $_POST['start_time'] = '';
+  }
+
+  if(!empty($_POST['end_time'])){
+    $_POST['end_time'] = test_input($_POST['end_time']);
+
+  }else{
+    $_POST['end_time'] = '';
+  }
+
+  if(!empty($_POST['after_care'])){
+    $_POST['after_care'] = test_input($_POST['after_care']);
+  }
+
+  if(!empty($_POST['after_care_time_end'])){
+    $_POST['after_care_time_end'] = test_input($_POST['after_care_time_end']);
+  }
+
+  if(!empty($_POST['price_after_care'])){
+    $_POST['price_after_care'] = test_input($_POST['price_after_care']);
+  }
+  if(!empty($_POST['food_provided'])){
+    $_POST['food_provided'] = test_input($_POST['food_provided']);
+  }
+
+  if(!empty($_POST['special_needs_accom'])){
+    $_POST['special_needs_accom'] = test_input($_POST['special_needs_accom']);
+  }
+  if(!empty($_POST['scholarship_opps'])){
+    $_POST['scholarship_opps'] = test_input($_POST['scholarship_opps']);
+  }
+  if(!empty($_POST['description'])){
+    $_POST['description'] = test_input($_POST['description']);
+  }
+
+  if(!empty($_POST['camp_start_date'])){
+    $_POST['camp_start_date'] = test_input($_POST['camp_start_date']);
+  }
+
+  if(!empty($_POST['camp_end_date'])){
+    $_POST['camp_end_date'] = test_input($_POST['camp_end_date']);
+  }
+
+  if(!empty($_POST['camp_fill_date'])){
+    $_POST['camp_fill_date'] = test_input($_POST['camp_fill_date']);
+  }
+
+  if(!empty($_POST['sunday'])){
+    $_POST['sunday'] = test_input($_POST['sunday']);
+  }
+  if(!empty($_POST['monday'])){
+    $_POST['monday'] = test_input($_POST['monday']);
+  }
+  if(!empty($_POST['tuesday'])){
+    $_POST['tuesday'] = test_input($_POST['tuesday']);
+  }
+  if(!empty($_POST['wednesday'])){
+    $_POST['wednesday'] = test_input($_POST['wednesday']);
+  }
+  if(!empty($_POST['thursday'])){
+    $_POST['thursday'] = test_input($_POST['thursday']);
+  }
+  if(!empty($_POST['friday'])){
+    $_POST['friday'] = test_input($_POST['friday']);
+  }
+  if(!empty($_POST['saturday'])){
+    $_POST['saturday'] = test_input($_POST['saturday']);
+  }
+
+  if(!empty($_POST['camp_visible'])){
+    $_POST['camp_visible'] = test_input($_POST['camp_visible']);
+  }
+
+  if(!empty($_POST['website_link'])){
+    $_POST['website_link'] = test_input($_POST['website_link']);
+  }
+
+
+
+
+
+
+
 
 
   
@@ -214,7 +334,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php echo "<span style='color:red;'>$nameErr</span>" ?>
         <!-- <br> -->
         
-        <!-- <label for="street_address">*Street Address:</label>
+        <label for="street_address">*Street Address:</label>
         <input type="text" id="street_address" name="street_address" required><br>
         
         <label for="city">*City:</label>
@@ -227,7 +347,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" id="zipcode" name="zipcode" required><br>
         
         <label for="activity">*Activity:</label>
-        <input type="text" id="activity" name="activity" required><br> -->
+        <input type="text" id="activity" name="activity" required><br>
         
         <label for="price">Price:</label>
         <input type="number" id="price" name="price" step="0.01" min="0"><br>
@@ -266,7 +386,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="description">Description:</label><br>
         <textarea id="description" name="description" rows="5" ></textarea><br>
 
-        <!-- below unadded with process_camp_upload -->
+        
 
         <label for="camp_start_date">Start Date:</label>
         <input type="date" id="camp_start_date" name="camp_start_date"><br>
@@ -323,10 +443,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 </html>
 <?php
-if(isset($name)){
-  echo $name."<br>";
-}
-if(isset($price)){
-echo $price;
-}
+// if(isset($name)){
+//   echo $name."<br>";
+// }
+// if(isset($price)){
+// echo $price;
+// }
+
+// echo $_POST['ages_served'];
+
+print_r($_POST)
+
 ?>
