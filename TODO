@@ -1,9 +1,9 @@
-recommend: for database schema it may be useful to have a "upload time" for administration and a "dates of operation" for searchable camps between certain dates?
-
 TODO:
 
 
     UPLOAD:
+            keep data populated on failed upload
+
             state -> 2char abbrev dropdown menu
             start time ui -> clock
             end time ui -> clock
@@ -19,6 +19,8 @@ TODO:
     DATABASE: Add day/night camp delination, a user can search for either or both
 
     DATABASE: Add "Parent Listing" indication for larger camps (True/False)
+
+    DATABASE: 
 
     SEARCH: Add searchable for parent listings and day/night camp delination
 
