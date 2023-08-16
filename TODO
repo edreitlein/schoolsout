@@ -4,14 +4,24 @@ TODO:
     UPLOAD:
             keep data populated on failed upload
 
-            state -> 2char abbrev dropdown menu
-            start time ui -> clock
-            end time ui -> clock
-            after care -> yes/no dropdown
-            after care end time -> clock
-            food provided -> yes/no dropdown
-            special needs accom -> yes/no dropdown
-            scholarship opps -> yes/no dropdown
+            state -> 2char abbrev dropdown menu ✅
+            start time ui -> clock ✅                       needs regex for 6 numbers and : ✅
+            end time ui -> clock ✅                         needs regex for 6 numbers and : ✅
+            after care -> yes/no dropdown ✅                needs regex for 1 space entry number ✅
+            after care end time -> clock ✅                 needs regex for 6 numbers and : ✅
+            price_after_care -> nums and . only ✅          needs regex ✅
+            food provided -> yes/no dropdown ✅             needs regex for 1 space entry number ✅
+            special needs accom -> yes/no dropdown ✅       needs regex for 1 space entry number ✅
+            scholarship opps -> yes/no dropdown ✅          needs regex for 1 space entry number ✅
+
+            Add auth for start,end,fill dates of 0000-00-00
+            add auth for website
+            add auth for "if camp is searchable" box
+
+            add auth for description for alphanumeric with. and dash
+
+
+            price_after_care should be regex for '/^[0-9.]+$/' ✅
 
 
             Account ID field removal once login

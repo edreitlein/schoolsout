@@ -229,6 +229,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (!empty($_POST['price'])){
     // echo "something";
     $price = test_input($_POST['price']);
+    if (!preg_match('/^[0-9.]+$/',$price)) {
+      $hasError = 1;
+      echo "an issue with price upload has occured!";
+      $priceErr = "";//there should not be a way, using the current UI, that a person can upload anything but numbers and . so no err message needed
+    }
 
   }else{
     $price="";
@@ -241,8 +246,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $_POST['ages_served'] = "";
   }
 
+// there should be no way for a user to upload a time incorrectly while using the UI, if an upload issue occured it was likely caused by an attack/bad actor
+// 
+//   
   if(!empty($_POST['start_time'])){
     $_POST['start_time'] = test_input($_POST['start_time']);
+    $_POST['start_time'].=":00";//adds digits for correct regex and upload
+    if (!preg_match('/^(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d$/',$_POST['start_time'])) {
+      $hasError = 1;
+      // echo($_POST['start_time']);
+      // echo "\n";
+      echo "An issue with start time upload has occured!";
+      // $priceErr = "";//there should not be a way, using the current UI, that a person can upload anything but numbers and . so no err message needed
+    }
 
   }else{
     $_POST['start_time'] = '';
@@ -250,6 +266,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if(!empty($_POST['end_time'])){
     $_POST['end_time'] = test_input($_POST['end_time']);
+    $_POST['end_time'].=":00";//adds digits for correct regex and upload
+    if (!preg_match('/^\d{2}:\d{2}:\d{2}$/',$_POST['end_time'])) {
+      $hasError = 1;
+      echo "An issue with end time upload has occured!";
+      // $priceErr = "";//there should not be a way, using the current UI, that a person can upload anything but numbers and . so no err message needed
+    }
 
   }else{
     $_POST['end_time'] = '';
@@ -257,24 +279,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if(!empty($_POST['after_care'])){
     $_POST['after_care'] = test_input($_POST['after_care']);
+    if($_POST['after_care']!=1 or $_POST['after_care']!=0){
+      $hasError = 1;
+      echo "after_care was not 1 or 0!";
+    }
   }
 
   if(!empty($_POST['after_care_time_end'])){
     $_POST['after_care_time_end'] = test_input($_POST['after_care_time_end']);
+    $_POST['after_care_time_end'].=":00";//adds digits for correct regex and upload
+    if (!preg_match('/^\d{2}:\d{2}:\d{2}$/',$_POST['after_care_time_end'])) {
+      $hasError = 1;
+      echo "An issue with after care time upload has occured!";
+      // $priceErr = "";//there should not be a way, using the current UI, that a person can upload anything but numbers and . so no err message needed
+    }
   }
 
   if(!empty($_POST['price_after_care'])){
     $_POST['price_after_care'] = test_input($_POST['price_after_care']);
+    if (!preg_match('/^[0-9.]+$/',$_POST['price_after_care'])) {
+      $hasError = 1;
+      echo "an issue with after care price upload has occured!";
+      // $priceErr = "";//there should not be a way, using the current UI, that a person can upload anything but numbers and . so no err message needed
+    }
   }
   if(!empty($_POST['food_provided'])){
     $_POST['food_provided'] = test_input($_POST['food_provided']);
+    if($_POST['food_provided']!=1 or $_POST['food_provided']!=0){
+      $hasError = 1;
+      echo "food_provided was not 1 or 0!";
+    }
   }
 
   if(!empty($_POST['special_needs_accom'])){
     $_POST['special_needs_accom'] = test_input($_POST['special_needs_accom']);
+    if($_POST['special_needs_accom']!=1 or $_POST['special_needs_accom']!=0){
+      $hasError = 1;
+      echo "special_needs_accom was not 1 or 0!";
+    }
+
   }
   if(!empty($_POST['scholarship_opps'])){
     $_POST['scholarship_opps'] = test_input($_POST['scholarship_opps']);
+    if($_POST['scholarship_opps']!=1 or $_POST['scholarship_opps']!=0){
+    
+      $hasError = 1;
+      echo "scholarship_opps was not 1 or 0!";
+    }
   }
   if(!empty($_POST['description'])){
     $_POST['description'] = test_input($_POST['description']);
@@ -445,7 +496,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <label for="state">*State:</label>
         <?php echo "<span style='color:red;'>$stateErr</span>" ?>
-        <input type="text" id="state" name="state" required><br>
+        <select id="state" name="state">
+          <option value="AL">Alabama</option>
+          <option value="AK">Alaska</option>
+          <option value="AZ">Arizona</option>
+          <option value="AR">Arkansas</option>
+          <option value="CA">California</option>
+          <option value="CO">Colorado</option>
+          <option value="CT">Connecticut</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="IL">Illinois</option>
+          <option value="IN">Indiana</option>
+          <option value="IA">Iowa</option>
+          <option value="KS">Kansas</option>
+          <option value="KY">Kentucky</option>
+          <option value="LA">Louisiana</option>
+          <option value="ME">Maine</option>
+          <option value="MD">Maryland</option>
+          <option value="MA">Massachusetts</option>
+          <option value="MI">Michigan</option>
+          <option value="MN">Minnesota</option>
+          <option value="MS">Mississippi</option>
+          <option value="MO">Missouri</option>
+          <option value="MT">Montana</option>
+          <option value="NE">Nebraska</option>
+          <option value="NV">Nevada</option>
+          <option value="NH">New Hampshire</option>
+          <option value="NJ">New Jersey</option>
+          <option value="NM">New Mexico</option>
+          <option value="NY">New York</option>
+          <option value="NC">North Carolina</option>
+          <option value="ND">North Dakota</option>
+          <option value="OH">Ohio</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          <option value="SD">South Dakota</option>
+          <option value="TN">Tennessee</option>
+          <option value="TX">Texas</option>
+          <option value="UT">Utah</option>
+          <option value="VT">Vermont</option>
+          <option value="VA">Virginia</option>
+          <option value="WA">Washington</option>
+          <option value="WV">West Virginia</option>
+          <option value="WI">Wisconsin</option>
+          <option value="WY">Wyoming</option>
+        </select>
         
         <label for="zipcode">*Zipcode:</label>
         <?php echo "<span style='color:red;'>$zipcodeErr</span>" ?>
@@ -461,32 +564,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="text" id="ages_served" name="ages_served" ><br>
         
         <label for="start_time">Start Time:</label>
-        <input type="text" id="start_time" name="start_time" ><br>
+        <input type="time" id="start_time" name="start_time" ><br>
         
         <label for="end_time">End Time:</label>
-        <input type="text" id="end_time" name="end_time" ><br>
+        <input type="time" id="end_time" name="end_time" ><br>
 <!-- </div>
         <div style="display:inline-block; min-width:45%; "> -->
         <!-- <label for="hours_duration">Hours Duration:</label>
         <input type="text" id="hours_duration" name="hours_duration" required><br> -->
         
         <label for="after_care">After Care:</label>
-        <input type="text" id="after_care" name="after_care" ><br>
+        <select id="after_care" name="after_care">
+          <option value="1">Yes</option>
+          <option value="0" selected >No</option>
+        </select>
+        <!-- <input type="text" id="after_care" name="after_care" ><br> -->
         
         <label for="after_care_time_end">After Care Time End:</label>
-        <input type="text" id="after_care_time_end" name="after_care_time_end" ><br>
+        <input type="time" id="after_care_time_end" name="after_care_time_end" ><br>
         
         <label for="price_after_care">Price After Care:</label>
-        <input type="text" id="price_after_care" name="price_after_care" ><br>
+        <input type="number" id="price_after_care" name="price_after_care" step="0.01" min="0"><br>
         
         <label for="food_provided">Food Provided:</label>
-        <input type="text" id="food_provided" name="food_provided" ><br>
+        <select id="food_provided" name="food_provided">
+          <option value="1">Yes</option>
+          <option value="0"selected >No</option>
+        </select>
+        <!-- <input type="text" id="food_provided" name="food_provided" ><br> -->
         
         <label for="special_needs_accom">Special Needs Accommodation:</label>
-        <input type="text" id="special_needs_accom" name="special_needs_accom" ><br>
+        <select id="special_needs_accom" name="special_needs_accom">
+          <option value="1">Yes</option>
+          <option value="0" selected >No</option>
+        </select>
+        <!-- <input type="text" id="special_needs_accom" name="special_needs_accom" ><br> -->
         
         <label for="scholarship_opps">Scholarship Opportunities:</label>
-        <input type="text" id="scholarship_opps" name="scholarship_opps" ><br>
+        <select id="scholarship_opps" name="scholarship_opps">
+          <option value="1">Yes</option>
+          <option value="0" selected >No</option>
+        </select>
+        <!-- <input type="text" id="scholarship_opps" name="scholarship_opps" ><br> -->
         
         <label for="description">Description:</label><br>
         <textarea id="description" name="description" rows="5" ></textarea><br>
@@ -531,7 +650,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="camp_visible">If the camp is searchable:</label>
         <select id="camp_visible" name="camp_visible">
             <option value=0>Hidden</option>
-            <option value=1>Shown</option>
+            <option value=1 selected>Shown</option>
         </select><br>
 
         <label for="website_link">Website:</label>

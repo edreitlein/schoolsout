@@ -422,7 +422,7 @@ function displaySearchResult($row){
             }
         
         }else{
-          $results=$mysqli->query("SELECT * FROM camp_info");
+          $results=$mysqli->query("SELECT * FROM camp_info WHERE camp_visible = 1");
           if($results->num_rows>0){
             while($row=$results->fetch_assoc()){
               displaySearchResult($row);
