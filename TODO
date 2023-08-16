@@ -14,8 +14,8 @@ TODO:
             special needs accom -> yes/no dropdown ✅       needs regex for 1 space entry number ✅
             scholarship opps -> yes/no dropdown ✅          needs regex for 1 space entry number ✅
 
-            Add auth for start,end,fill dates of 0000-00-00
-            add auth for website
+            Add auth for start,end,fill dates of 0000-00-00 ✅
+            add auth for website 
             add auth for "if camp is searchable" box
 
             add auth for description for alphanumeric with. and dash
@@ -34,6 +34,8 @@ TODO:
 
     SEARCH: Add searchable for parent listings and day/night camp delination
 
+    SEARCH: Protect search fields from xxs and sqlInject with input trimming via htmlspecialchars, no regex needed since it will not be uploaded
+
     UPLOAD: Add fields for parental listings and day/night 
 
     PAGES: Make camp listing pages clickable and populate with their own data
@@ -41,6 +43,11 @@ TODO:
     PAGES: Camp listing editor
 
     DATABASE/USER: User login
+
+    DESIGN: Implement better css design conventions and better PHP reuse of variables
+            CSS: Have a stylesheet instead of using inline design
+            PHP: use variables to reuse code such as for regex
+                possibly -> foreach in $_POST for campupload
 
 
 

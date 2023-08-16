@@ -333,14 +333,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if(!empty($_POST['camp_start_date'])){
     $_POST['camp_start_date'] = test_input($_POST['camp_start_date']);
+    // echo($_POST['camp_start_date']);
+    if (!preg_match('/^(?:(?:19|20)\d\d)-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/',$_POST['camp_start_date'])) {
+      $hasError = 1;
+      echo "an issue with camp_start_date upload has occured!";
+    }
+    
   }
 
   if(!empty($_POST['camp_end_date'])){
     $_POST['camp_end_date'] = test_input($_POST['camp_end_date']);
+    if (!preg_match('/^(?:(?:19|20)\d\d)-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/',$_POST['camp_end_date'])) {
+      $hasError = 1;
+      echo "an issue with camp_end_date upload has occured!";
+    }
   }
 
   if(!empty($_POST['camp_fill_date'])){
     $_POST['camp_fill_date'] = test_input($_POST['camp_fill_date']);
+    if (!preg_match('/^(?:(?:19|20)\d\d)-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/',$_POST['camp_fill_date'])) {
+      $hasError = 1;
+      echo "an issue with camp_fill_date upload has occured!";
+    }
   }
 
   if(!empty($_POST['sunday'])){
@@ -411,7 +425,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
 
-        if($hasError == 0){
+        if($hasError == 10){//change to $hasError == 0  for prod.
         $insertQuery = "INSERT INTO camp_info (account_id,name, street_address,city,state,zipcode,activity,price,ages_served, start_time,end_time,after_care,after_care_time_end,price_after_care,food_provided,special_needs_accom,scholarship_opps,description,camp_start_date,camp_end_date,camp_fill_date,camp_days_of_week,camp_visible,website_link) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";//may have to work with current_timestamp
         $stmd = $mysqli->prepare($insertQuery);
         $stmd->bind_param("issssssdsssisdiiisssssis",$_POST["account_id"],$name,$_POST['street_address'],$_POST['city'],$_POST['state'],$_POST['zipcode'],$_POST['activity'], $price, $_POST['ages_served'], $_POST['start_time'], $_POST['end_time'], $_POST['after_care'], $_POST['after_care_end_time'], $_POST['price_after_care'], $_POST['food_provided'], $_POST['special_needs_accom'], $_POST['scholarship_opps'], $_POST['description'],$_POST['camp_start_date'],$_POST['camp_end_date'],$_POST['camp_fill_date'],$camp_days_of_week,$_POST['camp_visible'],$_POST['website_link']);
