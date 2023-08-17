@@ -139,7 +139,7 @@ include "./databaseInit.php";
 <?php include "./header.php"; ?>
 <?php
 
-$nameErr=$priceErr=$streetErr=$cityErr=$stateErr=$zipcodeErr="";
+$nameErr=$priceErr=$streetErr=$cityErr=$stateErr=$zipcodeErr=$webErr=$descripErr="";
 
 
 // post submit db checking and uploading
@@ -279,7 +279,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if(!empty($_POST['after_care'])){
     $_POST['after_care'] = test_input($_POST['after_care']);
-    if($_POST['after_care']!=1 or $_POST['after_care']!=0){
+    if($_POST['after_care']!='1' && $_POST['after_care']!='0'){//this is confusing to read
       $hasError = 1;
       echo "after_care was not 1 or 0!";
     }
@@ -305,7 +305,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
   if(!empty($_POST['food_provided'])){
     $_POST['food_provided'] = test_input($_POST['food_provided']);
-    if($_POST['food_provided']!=1 or $_POST['food_provided']!=0){
+    if($_POST['food_provided']!='1' && $_POST['food_provided']!='0'){
       $hasError = 1;
       echo "food_provided was not 1 or 0!";
     }
@@ -313,7 +313,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if(!empty($_POST['special_needs_accom'])){
     $_POST['special_needs_accom'] = test_input($_POST['special_needs_accom']);
-    if($_POST['special_needs_accom']!=1 or $_POST['special_needs_accom']!=0){
+    if($_POST['special_needs_accom']!='1' && $_POST['special_needs_accom']!='0'){
       $hasError = 1;
       echo "special_needs_accom was not 1 or 0!";
     }
@@ -321,7 +321,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
   if(!empty($_POST['scholarship_opps'])){
     $_POST['scholarship_opps'] = test_input($_POST['scholarship_opps']);
-    if($_POST['scholarship_opps']!=1 or $_POST['scholarship_opps']!=0){
+    if($_POST['scholarship_opps']!=1 && $_POST['scholarship_opps']!=0){
     
       $hasError = 1;
       echo "scholarship_opps was not 1 or 0!";
@@ -329,6 +329,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
   if(!empty($_POST['description'])){
     $_POST['description'] = test_input($_POST['description']);
+    if (!preg_match('/^[A-Za-z0-9.,\-\s\n{}()#@\$?]+$/', $_POST['description'])) {
+      $hasError = 1;
+      $descripErr = "Description may only contain Letters, Numbers, Spaces, New Lines, .-{}()@?#";
+    }
+      
   }
 
   if(!empty($_POST['camp_start_date'])){
@@ -357,6 +362,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
+  
+
+
   if(!empty($_POST['sunday'])){
     $_POST['sunday'] = test_input($_POST['sunday']);
   }
@@ -381,10 +389,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if(!empty($_POST['camp_visible'])){
     $_POST['camp_visible'] = test_input($_POST['camp_visible']);
+    if($_POST['camp_visible']!="1" && $_POST['camp_visible']!="0"){
+      $hasError = 1;
+      echo "camp_visible was not 1 or 0!";
+      echo $_POST['camp_visible'];
+      echo gettype($_POST['camp_visible']);
+    }
   }
 
   if(!empty($_POST['website_link'])){
     $_POST['website_link'] = test_input($_POST['website_link']);
+    // echo $_POST['website_link'];
+    // website link validation
+    if (!(filter_var($_POST['website_link'], FILTER_VALIDATE_URL))) {
+      $hasError = 1;
+      $webErr = "Website link was detected as invalid!";
+      // echo "Website link invalid";
+  } 
   }
 
 
@@ -621,7 +642,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </select>
         <!-- <input type="text" id="scholarship_opps" name="scholarship_opps" ><br> -->
         
-        <label for="description">Description:</label><br>
+        <label for="description">Description:</label>
+        <?php if($descripErr != '') echo "<span style='color:red;'>$descripErr</span>" ?>
         <textarea id="description" name="description" rows="5" ></textarea><br>
 
         
@@ -663,11 +685,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="camp_visible">If the camp is searchable:</label>
         <select id="camp_visible" name="camp_visible">
-            <option value=0>Hidden</option>
-            <option value=1 selected>Shown</option>
+            <option value="0">Hidden</option>
+            <option value="1" selected>Shown</option>
         </select><br>
 
         <label for="website_link">Website:</label>
+        <?php if($webErr != '') echo "<span style='color:red;'>$webErr</span><br>" ?>
         <input type="website" id="website_link" name="website_link" ><br>
 
 

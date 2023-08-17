@@ -15,10 +15,10 @@ TODO:
             scholarship opps -> yes/no dropdown ✅          needs regex for 1 space entry number ✅
 
             Add auth for start,end,fill dates of 0000-00-00 ✅
-            add auth for website 
-            add auth for "if camp is searchable" box
+            add auth for website  ✅
+            add auth for "if camp is searchable" box ✅
 
-            add auth for description for alphanumeric with. and dash
+            add auth for description for alphanumeric with newline, "." "," "-" " " ect., 
 
 
             price_after_care should be regex for '/^[0-9.]+$/' ✅
@@ -48,6 +48,10 @@ TODO:
             CSS: Have a stylesheet instead of using inline design
             PHP: use variables to reuse code such as for regex
                 possibly -> foreach in $_POST for campupload
+
+
+
+    INVESTIGATE: A possible rewrite with laravel or cakephp
 
 
 
