@@ -409,6 +409,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
 
+  if(!empty($_POST['overnight'])){
+    $_POST['overnight'] = test_input($_POST['overnight']);
+    if($_POST['overnight']!="1" && $_POST['overnight']!="0"){
+      $hasError = 1;
+      echo "overnight option was not 1 or 0!";
+      echo $_POST['overnight'];
+      echo gettype($_POST['overnight']);
+    }
+  }
+
+
 
 // post data-validation to prevent xss and sql injection, now sending to db
 
@@ -446,10 +457,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
 
-        if($hasError == 10){//change to $hasError == 0  for prod.
-        $insertQuery = "INSERT INTO camp_info (account_id,name, street_address,city,state,zipcode,activity,price,ages_served, start_time,end_time,after_care,after_care_time_end,price_after_care,food_provided,special_needs_accom,scholarship_opps,description,camp_start_date,camp_end_date,camp_fill_date,camp_days_of_week,camp_visible,website_link) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";//may have to work with current_timestamp
+        if($hasError == 0){//change to $hasError == 0  for prod.
+        $insertQuery = "INSERT INTO camp_info (account_id,name, street_address,city,state,zipcode,activity,price,ages_served, start_time,end_time,after_care,after_care_time_end,price_after_care,food_provided,special_needs_accom,scholarship_opps,description,camp_start_date,camp_end_date,camp_fill_date,camp_days_of_week,camp_visible,website_link,overnight) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";//may have to work with current_timestamp
         $stmd = $mysqli->prepare($insertQuery);
-        $stmd->bind_param("issssssdsssisdiiisssssis",$_POST["account_id"],$name,$_POST['street_address'],$_POST['city'],$_POST['state'],$_POST['zipcode'],$_POST['activity'], $price, $_POST['ages_served'], $_POST['start_time'], $_POST['end_time'], $_POST['after_care'], $_POST['after_care_end_time'], $_POST['price_after_care'], $_POST['food_provided'], $_POST['special_needs_accom'], $_POST['scholarship_opps'], $_POST['description'],$_POST['camp_start_date'],$_POST['camp_end_date'],$_POST['camp_fill_date'],$camp_days_of_week,$_POST['camp_visible'],$_POST['website_link']);
+        $stmd->bind_param("issssssdsssisdiiisssssisi",$_POST["account_id"],$name,$_POST['street_address'],$_POST['city'],$_POST['state'],$_POST['zipcode'],$_POST['activity'], $price, $_POST['ages_served'], $_POST['start_time'], $_POST['end_time'], $_POST['after_care'], $_POST['after_care_end_time'], $_POST['price_after_care'], $_POST['food_provided'], $_POST['special_needs_accom'], $_POST['scholarship_opps'], $_POST['description'],$_POST['camp_start_date'],$_POST['camp_end_date'],$_POST['camp_fill_date'],$camp_days_of_week,$_POST['camp_visible'],$_POST['website_link'],$_POST['overnight']);
         if($stmd->execute()){ 
             echo '<script>alert("listing uploaded!")
             const waitFunction = async () => {
@@ -692,6 +703,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label for="website_link">Website:</label>
         <?php if($webErr != '') echo "<span style='color:red;'>$webErr</span><br>" ?>
         <input type="website" id="website_link" name="website_link" ><br>
+
+
+        <label for="overnight">Camp has Overnight options:</label>
+        <select id="overnight" name="overnight">
+            <option value="0">No Overnight</option>
+            <option value="1" selected>Yes Overnight</option>
+        </select><br>
 
 
 

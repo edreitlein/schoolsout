@@ -36,6 +36,7 @@ function displaySearchResult($row){
         echo "<td>" . $row["camp_fill_date"]."</td>";
         echo "<td>" . $row["camp_days_of_week"]."</td>";
         echo "<td>" . $row["website_link"]."</td>";
+        echo "<td>" . yesNoDisplay($row["overnight"])."</td>";//this should be t/f and display as Yes/No
         echo "</tr>";
 
         //  <th>Start Date</th>
@@ -72,12 +73,13 @@ function displaySearchResult($row){
     
   }
   .centered-table {
-  max-width: 90%; /* Adjust this value to your desired width */
+  max-width: auto; /* Adjust this value to your desired width */
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin:auto;
+  /* table-layout: auto; */
   
 }
 
@@ -168,6 +170,11 @@ function displaySearchResult($row){
         <input type="checkbox" id="saturday" name="saturday" value="Saturday">
         </div>
 
+        <div style="padding: 2px; border: 1px solid black; display: inline-block;">
+        <label for="overnight">Camp with Overnight:</label>
+        <input type="checkbox" id="overnight" name="overnight" value="overnight">
+        </div>
+
 
         <br><input type="submit" value="Submit" name="search">
         <input type="submit" value="See All Entries" name="seeAll">
@@ -201,7 +208,8 @@ function displaySearchResult($row){
     <th>End Date</th>
     <th>Fill Date</th>
     <th>Days Of Week</th>
-    <th>Website</th></tr>
+    <th>Website</th>
+    <th>Overnight</th></tr>
 
     <!-- php here for building search result information -->
 
@@ -256,14 +264,14 @@ function displaySearchResult($row){
           // echo print_r($parameters);
         }
         if (isset($_GET['minPrice']) and $_GET['minPrice']) {
-          echo 'min';
+          // echo 'min';
           $sql[] = " price >= ?";
           $minPrice = $minPrice;//searches minimim price
           $parameters[] = $minPrice;
           // echo print_r($parameters);
         }
         if (isset($_GET['maxPrice']) and $_GET['maxPrice']) {//could remove isset 
-          echo 'max';
+          // echo 'max';
           $sql[] = " price <= ?";
           $maxPrice = $maxPrice;//searches minimim price
           $parameters[] = $maxPrice;
@@ -303,6 +311,10 @@ function displaySearchResult($row){
 
         if(isset($_GET["scholarship_opps"])){
           $sql[] = " scholarship_opps = 1";
+        }
+
+        if(isset($_GET["overnight"])){
+          $sql[] = " overnight = 1";
         }
 
         if($camp_start_date){

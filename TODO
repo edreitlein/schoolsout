@@ -18,7 +18,7 @@ TODO:
             add auth for website  ✅
             add auth for "if camp is searchable" box ✅
 
-            add auth for description for alphanumeric with newline, "." "," "-" " " ect., 
+            add auth for description for alphanumeric with newline, "." "," "-" " " ect., ✅
 
 
             price_after_care should be regex for '/^[0-9.]+$/' ✅
@@ -26,7 +26,13 @@ TODO:
 
             Account ID field removal once login
 
-    DATABASE: Add day/night camp delination, a user can search for either or both
+    DATABASE: 
+    
+                Add day/night camp delination, ✅
+
+                Add upload for overnight
+    
+                a user can search for either or both ✅ possible change: drop down box for [yes/no/both]
 
     DATABASE: Add "Parent Listing" indication for larger camps (True/False)
 
