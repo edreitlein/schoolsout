@@ -37,6 +37,7 @@ function displaySearchResult($row){
         echo "<td>" . $row["camp_days_of_week"]."</td>";
         echo "<td>" . $row["website_link"]."</td>";
         echo "<td>" . yesNoDisplay($row["overnight"])."</td>";//this should be t/f and display as Yes/No
+        echo "<td>" . yesNoDisplay($row["parent_list"])."</td>";//this should be t/f and display as Yes/No
         echo "</tr>";
 
         //  <th>Start Date</th>
@@ -175,6 +176,11 @@ function displaySearchResult($row){
         <input type="checkbox" id="overnight" name="overnight" value="overnight">
         </div>
 
+        <div style="padding: 2px; border: 1px solid black; display: inline-block;">
+        <label for="parent_list">Parent Listings Only</label>
+        <input type="checkbox" id="parent_list" name="parent_list" value="parent_list">
+        </div>
+
 
         <br><input type="submit" value="Submit" name="search">
         <input type="submit" value="See All Entries" name="seeAll">
@@ -209,7 +215,22 @@ function displaySearchResult($row){
     <th>Fill Date</th>
     <th>Days Of Week</th>
     <th>Website</th>
-    <th>Overnight</th></tr>
+    <th>Overnight</th>
+    <th>Parent Listing</th></tr>
+    <!-- add inline php for displaying if parent listing for table only, only if parent listing can be search as yes/no/both -->
+
+    <!-- yes/no/both can be function for search can be
+  def yesNoBoth($option, $varName){ //$option should already be checked for isset, $varName is string ($_Post["name"] == "name"), needs all 3 returns since selection boxes always return a value?
+      if($option == 1){
+        return " $varName = 1";
+      }
+      if(option == 2){
+        return " $varName = 1 OR $varName = 0";
+      }
+      return " $varName = 0"
+  }
+  
+  -->
 
     <!-- php here for building search result information -->
 
@@ -315,6 +336,10 @@ function displaySearchResult($row){
 
         if(isset($_GET["overnight"])){
           $sql[] = " overnight = 1";
+        }
+
+        if(isset($_GET["parent_list"])){
+          $sql[] = " parent_list = 1";
         }
 
         if($camp_start_date){

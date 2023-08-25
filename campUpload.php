@@ -419,6 +419,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
+  if(!empty($_POST['parent_list'])){
+    $_POST['parent_list'] = test_input($_POST['parent_list']);
+    if($_POST['parent_list']!="1" && $_POST['parent_list']!="0"){
+      $hasError = 1;
+      echo "parent_list option was not 1 or 0!";
+      echo $_POST['parent_list'];
+      echo gettype($_POST['parent_list']);
+    }
+  }
+
 
 
 // post data-validation to prevent xss and sql injection, now sending to db
@@ -458,9 +468,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         if($hasError == 0){//change to $hasError == 0  for prod.
-        $insertQuery = "INSERT INTO camp_info (account_id,name, street_address,city,state,zipcode,activity,price,ages_served, start_time,end_time,after_care,after_care_time_end,price_after_care,food_provided,special_needs_accom,scholarship_opps,description,camp_start_date,camp_end_date,camp_fill_date,camp_days_of_week,camp_visible,website_link,overnight) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";//may have to work with current_timestamp
+        $insertQuery = "INSERT INTO camp_info (account_id,name, street_address,city,state,zipcode,activity,price,ages_served, start_time,end_time,after_care,after_care_time_end,price_after_care,food_provided,special_needs_accom,scholarship_opps,description,camp_start_date,camp_end_date,camp_fill_date,camp_days_of_week,camp_visible,website_link,overnight,parent_list) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";//may have to work with current_timestamp
         $stmd = $mysqli->prepare($insertQuery);
-        $stmd->bind_param("issssssdsssisdiiisssssisi",$_POST["account_id"],$name,$_POST['street_address'],$_POST['city'],$_POST['state'],$_POST['zipcode'],$_POST['activity'], $price, $_POST['ages_served'], $_POST['start_time'], $_POST['end_time'], $_POST['after_care'], $_POST['after_care_end_time'], $_POST['price_after_care'], $_POST['food_provided'], $_POST['special_needs_accom'], $_POST['scholarship_opps'], $_POST['description'],$_POST['camp_start_date'],$_POST['camp_end_date'],$_POST['camp_fill_date'],$camp_days_of_week,$_POST['camp_visible'],$_POST['website_link'],$_POST['overnight']);
+        $stmd->bind_param("issssssdsssisdiiisssssisii",$_POST["account_id"],$name,$_POST['street_address'],$_POST['city'],$_POST['state'],$_POST['zipcode'],$_POST['activity'], $price, $_POST['ages_served'], $_POST['start_time'], $_POST['end_time'], $_POST['after_care'], $_POST['after_care_end_time'], $_POST['price_after_care'], $_POST['food_provided'], $_POST['special_needs_accom'], $_POST['scholarship_opps'], $_POST['description'],$_POST['camp_start_date'],$_POST['camp_end_date'],$_POST['camp_fill_date'],$camp_days_of_week,$_POST['camp_visible'],$_POST['website_link'],$_POST['overnight'],$_POST['parent_list']);
         if($stmd->execute()){ 
             echo '<script>alert("listing uploaded!")
             const waitFunction = async () => {
@@ -653,6 +663,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </select>
         <!-- <input type="text" id="scholarship_opps" name="scholarship_opps" ><br> -->
         
+        <label for="parent_list"title="If the listing is for several camps on
+        a different website">Parent Listing:</label>
+        <select id="parent_list" name="parent_list">
+          <option value="1">Yes</option>
+          <option value="0" selected >No</option>
+        </select>
+
+
         <label for="description">Description:</label>
         <?php if($descripErr != '') echo "<span style='color:red;'>$descripErr</span>" ?>
         <textarea id="description" name="description" rows="5" ></textarea><br>
@@ -707,8 +725,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <label for="overnight">Camp has Overnight options:</label>
         <select id="overnight" name="overnight">
-            <option value="0">No Overnight</option>
-            <option value="1" selected>Yes Overnight</option>
+            <option value="0" selected>No Overnight</option>
+            <option value="1" >Yes Overnight</option>
         </select><br>
 
 

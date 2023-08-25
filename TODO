@@ -30,19 +30,31 @@ TODO:
     
                 Add day/night camp delination, ✅
 
-                Add upload for overnight
+                Add upload for overnight ✅
     
-                a user can search for either or both ✅ possible change: drop down box for [yes/no/both]
+                a user can search for either or both ✅ possible change: drop down box for [yes/no/both] ❓
 
-    DATABASE: Add "Parent Listing" indication for larger camps (True/False)
+    DATABASE: Add "Parent Listing" indication for larger camps (True/False) ✅
+
+    DOCUMENTATION: Add a how-to for adding additional fields to the upload form
+
+    DOCUMENTATION: Go through and comment code
 
     DATABASE: 
 
-    SEARCH: Add searchable for parent listings and day/night camp delination
+    SEARCH: 
+    
+            Add searchable for parent listings ✅
+    
+            Add day/night camp delination ✅
 
     SEARCH: Protect search fields from xxs and sqlInject with input trimming via htmlspecialchars, no regex needed since it will not be uploaded
 
-    UPLOAD: Add fields for parental listings and day/night 
+    SEARCH: Display 0.00 price as " " (empty) instead of 0.00
+
+    SEARCH: Add yes/no/both for searching for parent, camp with overnight, any other that need -> see "def yesNoBoth()" in comments of "search.php"
+
+    UPLOAD: Add fields for parental listings and day/night ✅
 
     PAGES: Make camp listing pages clickable and populate with their own data
 

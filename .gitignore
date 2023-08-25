@@ -7,3 +7,6 @@ old/
 
 #database schema
 /databaseSchema.txt
+
+
+.vscode/
