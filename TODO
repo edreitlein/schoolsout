@@ -26,6 +26,8 @@ TODO:
 
             Account ID field removal once login
 
+            ❗Add err handling and data repopulation for failed uploads ❗
+
     DATABASE: 
     
                 Add day/night camp delination, ✅
