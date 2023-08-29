@@ -141,6 +141,8 @@ include "./databaseInit.php";
 
 $nameErr=$priceErr=$streetErr=$cityErr=$stateErr=$zipcodeErr=$webErr=$descripErr="";
 
+$nameVal=$streetVal=$cityVal=$stateVal=$zipcodeVal=$actVal=$priceVal=$ageVal=$stimeVal=$etimeVal=$afterCareVal=$priceAfterVal=$descVal="";
+
 
 // post submit db checking and uploading
 
@@ -168,6 +170,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!preg_match("/^[A-Za-z0-9\s\-]*$/",$name)) {
       $hasError = 1;
       $nameErr = "Only Letters, Numbers, Dashes and white space allowed";
+      
     }
   }
 
@@ -496,6 +499,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               };
             
             </script>';
+            #sets values for all previously entered info
+
+            $nameVal = $name;
+            $streetVal = $_POST['street_address'];
+            $cityVal = $_POST['city'];
+            $stateVal = $_POST['state'];
+            $zipcodeVal = $_POST['zipcode'];
+            $actVal=$_POST['activity'];
+            $priceVal=$_POST['price'];
+            $ageVal = $_POST['ages_served'];
+            $stimeVal = $_POST['start_time'];
+            $etimeVal=$_POST['end_time'];
+            $afterCareVal=$_POST['after_care_time_end'];
+            $priceAfterVal=$_POST['price_after_care'];
+            $descVal=$_POST['description'];
+
+
 
       }
 
@@ -538,92 +558,104 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <label for="name">*Name:</label>
         <?php echo "<span style='color:red;'>$nameErr</span>" ?>
-        <input type="text" id="name" name="name" required>
+        <input type="text" id="name" name="name" value="<?php echo $nameVal;?>" required>
         
         <!-- <br> -->
         
         <label for="street_address">*Street Address:</label>
         <?php echo "<span style='color:red;'>$streetErr</span>" ?>
-        <input type="text" id="street_address" name="street_address" required><br>
+        <input type="text" id="street_address" name="street_address" value="<?php echo $streetVal;?>"required><br>
         
         <label for="city">*City:</label>
         <?php echo "<span style='color:red;'>$cityErr</span>" ?>
-        <input type="text" id="city" name="city" required><br>
+        <input type="text" id="city" name="city" value="<?php echo $cityVal;?>"required><br>
         
+        <?php
+function stateSelect(string $stateName){#sets state to previously selected after upload err
+  if( !empty($_POST['state']) and $stateName == $_POST['state']){
+    echo " selected ";
+    return;
+  }
+  return;
+
+}
+        ?>
+
+
         <label for="state">*State:</label>
         <?php echo "<span style='color:red;'>$stateErr</span>" ?>
         <select id="state" name="state">
-          <option value="AL">Alabama</option>
-          <option value="AK">Alaska</option>
-          <option value="AZ">Arizona</option>
-          <option value="AR">Arkansas</option>
-          <option value="CA">California</option>
-          <option value="CO">Colorado</option>
-          <option value="CT">Connecticut</option>
-          <option value="DE">Delaware</option>
-          <option value="DC">District Of Columbia</option>
-          <option value="FL">Florida</option>
-          <option value="GA">Georgia</option>
-          <option value="HI">Hawaii</option>
-          <option value="ID">Idaho</option>
-          <option value="IL">Illinois</option>
-          <option value="IN">Indiana</option>
-          <option value="IA">Iowa</option>
-          <option value="KS">Kansas</option>
-          <option value="KY">Kentucky</option>
-          <option value="LA">Louisiana</option>
-          <option value="ME">Maine</option>
-          <option value="MD">Maryland</option>
-          <option value="MA">Massachusetts</option>
-          <option value="MI">Michigan</option>
-          <option value="MN">Minnesota</option>
-          <option value="MS">Mississippi</option>
-          <option value="MO">Missouri</option>
-          <option value="MT">Montana</option>
-          <option value="NE">Nebraska</option>
-          <option value="NV">Nevada</option>
-          <option value="NH">New Hampshire</option>
-          <option value="NJ">New Jersey</option>
-          <option value="NM">New Mexico</option>
-          <option value="NY">New York</option>
-          <option value="NC">North Carolina</option>
-          <option value="ND">North Dakota</option>
-          <option value="OH">Ohio</option>
-          <option value="OK">Oklahoma</option>
-          <option value="OR">Oregon</option>
-          <option value="PA">Pennsylvania</option>
-          <option value="RI">Rhode Island</option>
-          <option value="SC">South Carolina</option>
-          <option value="SD">South Dakota</option>
-          <option value="TN">Tennessee</option>
-          <option value="TX">Texas</option>
-          <option value="UT">Utah</option>
-          <option value="VT">Vermont</option>
-          <option value="VA">Virginia</option>
-          <option value="WA">Washington</option>
-          <option value="WV">West Virginia</option>
-          <option value="WI">Wisconsin</option>
-          <option value="WY">Wyoming</option>
+          <option value="AL" <?php stateSelect("AL");?>>Alabama</option>
+          <option value="AK" <?php stateSelect("AK");?>>Alaska</option>
+          <option value="AZ" <?php stateSelect("AZ");?>>Arizona</option>
+          <option value="AR" <?php stateSelect("AR");?>>Arkansas</option>
+          <option value="CA" <?php stateSelect("CA");?>>California</option>
+          <option value="CO" <?php stateSelect("CO");?>>Colorado</option>
+          <option value="CT" <?php stateSelect("CT");?>>Connecticut</option>
+          <option value="DE" <?php stateSelect("DE");?>>Delaware</option>
+          <option value="DC" <?php stateSelect("DC");?>>District Of Columbia</option>
+          <option value="FL" <?php stateSelect("FL");?>>Florida</option>
+          <option value="GA" <?php stateSelect("GA");?>>Georgia</option>
+          <option value="HI" <?php stateSelect("HI");?>>Hawaii</option>
+          <option value="ID" <?php stateSelect("ID");?>>Idaho</option>
+          <option value="IL" <?php stateSelect("IL");?>>Illinois</option>
+          <option value="IN" <?php stateSelect("IN");?>>Indiana</option>
+          <option value="IA" <?php stateSelect("IA");?>>Iowa</option>
+          <option value="KS" <?php stateSelect("KS");?>>Kansas</option>
+          <option value="KY" <?php stateSelect("KY");?>>Kentucky</option>
+          <option value="LA" <?php stateSelect("LA");?>>Louisiana</option>
+          <option value="ME" <?php stateSelect("ME");?>>Maine</option>
+          <option value="MD" <?php stateSelect("MD");?>>Maryland</option>
+          <option value="MA" <?php stateSelect("MA");?>>Massachusetts</option>
+          <option value="MI" <?php stateSelect("MI");?>>Michigan</option>
+          <option value="MN" <?php stateSelect("MN");?>>Minnesota</option>
+          <option value="MS" <?php stateSelect("MS");?>>Mississippi</option>
+          <option value="MO" <?php stateSelect("MO");?>>Missouri</option>
+          <option value="MT" <?php stateSelect("MT");?>>Montana</option>
+          <option value="NE" <?php stateSelect("NE");?>>Nebraska</option>
+          <option value="NV" <?php stateSelect("NV");?>>Nevada</option>
+          <option value="NH" <?php stateSelect("NH");?>>New Hampshire</option>
+          <option value="NJ" <?php stateSelect("NJ");?>>New Jersey</option>
+          <option value="NM" <?php stateSelect("NM");?>>New Mexico</option>
+          <option value="NY" <?php stateSelect("NY");?>>New York</option>
+          <option value="NC" <?php stateSelect("NC");?>>North Carolina</option>
+          <option value="ND" <?php stateSelect("ND");?>>North Dakota</option>
+          <option value="OH" <?php stateSelect("OH");?>>Ohio</option>
+          <option value="OK" <?php stateSelect("OK");?>>Oklahoma</option>
+          <option value="OR" <?php stateSelect("OR");?>>Oregon</option>
+          <option value="PA" <?php stateSelect("PA");?>>Pennsylvania</option>
+          <option value="RI" <?php stateSelect("RI");?>>Rhode Island</option>
+          <option value="SC" <?php stateSelect("SC");?>>South Carolina</option>
+          <option value="SD" <?php stateSelect("SD");?>>South Dakota</option>
+          <option value="TN" <?php stateSelect("TN");?>>Tennessee</option>
+          <option value="TX" <?php stateSelect("TX");?>>Texas</option>
+          <option value="UT" <?php stateSelect("UT");?>>Utah</option>
+          <option value="VT" <?php stateSelect("VT");?>>Vermont</option>
+          <option value="VA" <?php stateSelect("VA");?>>Virginia</option>
+          <option value="WA" <?php stateSelect("WA");?>>Washington</option>
+          <option value="WV" <?php stateSelect("WV");?>>West Virginia</option>
+          <option value="WI" <?php stateSelect("WI");?>>Wisconsin</option>
+          <option value="WY" <?php stateSelect("WY");?>>Wyoming</option>
         </select>
         
         <label for="zipcode">*Zipcode:</label>
         <?php echo "<span style='color:red;'>$zipcodeErr</span>" ?>
-        <input type="text" id="zipcode" name="zipcode" required><br>
+        <input type="text" id="zipcode" name="zipcode" value="<?php echo $zipcodeVal;?>"required><br>
         
         <label for="activity">*Activity:</label>
-        <input type="text" id="activity" name="activity" required><br>
+        <input type="text" id="activity" name="activity" value="<?php echo $actVal;?>" required><br>
         
         <label for="price">Price:</label>
-        <input type="number" id="price" name="price" step="0.01" min="0"><br>
+        <input type="number" id="price" name="price" step="0.01" min="0" value="<?php echo $priceVal;?>"><br>
         
         <label for="ages_served">Ages Served:</label>
-        <input type="text" id="ages_served" name="ages_served" ><br>
+        <input type="text" id="ages_served" name="ages_served" value="<?php echo $ageVal;?>"><br>
         
         <label for="start_time">Start Time:</label>
-        <input type="time" id="start_time" name="start_time" ><br>
+        <input type="time" id="start_time" name="start_time" value="<?php echo substr($stimeVal,0,-3);?>" ><br>
         
         <label for="end_time">End Time:</label>
-        <input type="time" id="end_time" name="end_time" ><br>
+        <input type="time" id="end_time" name="end_time" value="<?php echo substr($etimeVal,0,-3);?>"><br>
 <!-- </div>
         <div style="display:inline-block; min-width:45%; "> -->
         <!-- <label for="hours_duration">Hours Duration:</label>
@@ -631,49 +663,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         <label for="after_care">After Care:</label>
         <select id="after_care" name="after_care">
-          <option value="1">Yes</option>
+          
           <option value="0" selected >No</option>
+          <option value="1" <?php if (isset($_POST['after_care']) and $_POST['after_care'] == '1') echo 'selected'; ?>>Yes</option>
         </select>
         <!-- <input type="text" id="after_care" name="after_care" ><br> -->
         
         <label for="after_care_time_end">After Care Time End:</label>
-        <input type="time" id="after_care_time_end" name="after_care_time_end" ><br>
+        <input type="time" id="after_care_time_end" name="after_care_time_end" value="<?php echo $afterCareVal;?>"><br>
         
         <label for="price_after_care">Price After Care:</label>
-        <input type="number" id="price_after_care" name="price_after_care" step="0.01" min="0"><br>
+        <input type="number" id="price_after_care" name="price_after_care" step="0.01" min="0" value="<?php echo $priceAfterVal;?>"><br>
         
         <label for="food_provided">Food Provided:</label>
         <select id="food_provided" name="food_provided">
-          <option value="1">Yes</option>
+          
           <option value="0"selected >No</option>
+          <option value="1" <?php if (isset($_POST['food_provided']) and $_POST['food_provided'] == '1') echo 'selected'; ?>>Yes</option>
         </select>
         <!-- <input type="text" id="food_provided" name="food_provided" ><br> -->
         
         <label for="special_needs_accom">Special Needs Accommodation:</label>
         <select id="special_needs_accom" name="special_needs_accom">
-          <option value="1">Yes</option>
           <option value="0" selected >No</option>
+          <option value="1" <?php if (isset($_POST['special_needs_accom']) and $_POST['special_needs_accom'] == '1') echo 'selected'; ?>>Yes</option>
+
         </select>
         <!-- <input type="text" id="special_needs_accom" name="special_needs_accom" ><br> -->
         
         <label for="scholarship_opps">Scholarship Opportunities:</label>
         <select id="scholarship_opps" name="scholarship_opps">
-          <option value="1">Yes</option>
           <option value="0" selected >No</option>
+          <option value="1" <?php if (isset($_POST['scholarship_opps']) and $_POST['scholarship_opps'] == '1') echo 'selected'; ?>>Yes</option>
         </select>
         <!-- <input type="text" id="scholarship_opps" name="scholarship_opps" ><br> -->
         
         <label for="parent_list"title="If the listing is for several camps on
         a different website">Parent Listing:</label>
         <select id="parent_list" name="parent_list">
-          <option value="1">Yes</option>
           <option value="0" selected >No</option>
+          <option value="1" <?php if (isset($_POST['parent_list']) and $_POST['parent_list'] == '1') echo 'selected'; ?>>Yes</option>
+
         </select>
 
 
         <label for="description">Description:</label>
         <?php if($descripErr != '') echo "<span style='color:red;'>$descripErr</span>" ?>
-        <textarea id="description" name="description" rows="5" ></textarea><br>
+        <textarea id="description" name="description" rows="5" ><?php echo $descVal;?></textarea><br>
 
         
 

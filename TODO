@@ -23,7 +23,8 @@ TODO:
 
             price_after_care should be regex for '/^[0-9.]+$/' ✅
 
-
+            Add description regex to activity field
+            
             Account ID field removal once login
 
             ❗Add err handling and data repopulation for failed uploads ❗
