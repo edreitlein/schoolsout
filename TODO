@@ -23,11 +23,15 @@ TODO:
 
             price_after_care should be regex for '/^[0-9.]+$/' ✅
 
-            Add description regex to activity field
+            Add description regex to activity field ✅
             
             Account ID field removal once login
 
-            ❗Add err handling and data repopulation for failed uploads ❗
+            ❗Add err handling/descriptions
+            
+             and data repopulation for failed uploads ✅
+
+             Auto-pop hours-duration by start_time - end_time❗
 
     DATABASE: 
     
@@ -36,6 +40,8 @@ TODO:
                 Add upload for overnight ✅
     
                 a user can search for either or both ✅ possible change: drop down box for [yes/no/both] ❓
+    
+    
 
     DATABASE: Add "Parent Listing" indication for larger camps (True/False) ✅
 

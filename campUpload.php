@@ -141,7 +141,7 @@ include "./databaseInit.php";
 
 $nameErr=$priceErr=$streetErr=$cityErr=$stateErr=$zipcodeErr=$webErr=$descripErr="";
 
-$nameVal=$streetVal=$cityVal=$stateVal=$zipcodeVal=$actVal=$priceVal=$ageVal=$stimeVal=$etimeVal=$afterCareVal=$priceAfterVal=$descVal="";
+$nameVal=$streetVal=$cityVal=$stateVal=$zipcodeVal=$actVal=$priceVal=$ageVal=$stimeVal=$etimeVal=$afterCareVal=$priceAfterVal=$descVal=$startDateVal=$endDateVal=$campFillVal=$campDaysWeekVal="";
 
 
 // post submit db checking and uploading
@@ -239,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
   }else{
-    $price="";
+    $price=null; #unwritten price is blank in db instead of showing 0.00
   }
 
   if(!empty($_POST['ages_served'])){
@@ -305,6 +305,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "an issue with after care price upload has occured!";
       // $priceErr = "";//there should not be a way, using the current UI, that a person can upload anything but numbers and . so no err message needed
     }
+  }else{
+    $_POST['price_after_care']=null;
   }
   if(!empty($_POST['food_provided'])){
     $_POST['food_provided'] = test_input($_POST['food_provided']);
@@ -514,6 +516,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $afterCareVal=$_POST['after_care_time_end'];
             $priceAfterVal=$_POST['price_after_care'];
             $descVal=$_POST['description'];
+            $startDateVal = $_POST['camp_start_date'];
+            $endDateVal = $_POST['camp_end_date'];
+            $campFillVal = $_POST['camp_fill_date'];
+            $campDaysWeekVal=$camp_days_of_week;
+
+
+
 
 
 
@@ -714,55 +723,66 @@ function stateSelect(string $stateName){#sets state to previously selected after
         
 
         <label for="camp_start_date">Start Date:</label>
-        <input type="date" id="camp_start_date" name="camp_start_date"><br>
+        <input type="date" id="camp_start_date" name="camp_start_date" value="<?php echo $startDateVal;?>"><br>
         
         <label for="camp_end_date">End Date:</label>
-        <input type="date" id="camp_end_date" name="camp_end_date"><br>
+        <input type="date" id="camp_end_date" name="camp_end_date" value="<?php echo $endDateVal;?>"><br>
 
         <div title="The date the camp is likely to fill up, or stop accepting new campers.">
         <label title="The date the camp is likely to fill up, or stop accepting new campers." for="camp_fill_date">Camp Fill Date:</label>
-        <input type="date" id="camp_fill_date" name="camp_fill_date"><br>
+        <input type="date" id="camp_fill_date" name="camp_fill_date" value="<?php echo $campFillVal;?>"><br>
         </div>
+        <?php
+        function setDaysChecked(string $campDays, $letter){
+          if(str_contains($campDays,$letter)){
+            echo " checked ";
+            return;
+          }
+          return;
+        }
+
+
+?>
 
         <label>Days of Week Camp is Open:</label>
         <div style="padding: 2px; border: 1px solid black; display: inline-flex;">
         <label for="sunday">Sunday</label>
-        <input type="checkbox" id="sunday" name="sunday" value="Sunday">
+        <input <?php setDaysChecked($campDaysWeekVal,"S");?> type="checkbox" id="sunday" name="sunday" value="Sunday">
         
         <label for="monday">Monday</label>
-        <input type="checkbox" id="monday" name="monday" value="Monday">
+        <input <?php setDaysChecked($campDaysWeekVal,"M");?> type="checkbox" id="monday" name="monday" value="Monday">
         
         <label for="tuesday">Tuesday</label>
-        <input type="checkbox" id="tuesday" name="tuesday" value="Tuesday">
+        <input <?php setDaysChecked($campDaysWeekVal,"T");?> type="checkbox" id="tuesday" name="tuesday" value="Tuesday">
         
         <label for="wednesday">Wednesday</label>
-        <input type="checkbox" id="wednesday" name="wednesday" value="Wednesday">
+        <input <?php setDaysChecked($campDaysWeekVal,"W");?> type="checkbox" id="wednesday" name="wednesday" value="Wednesday">
         
         <label for="thursday">Thursday</label>
-        <input type="checkbox" id="thursday" name="thursday" value="Thursday">
+        <input <?php setDaysChecked($campDaysWeekVal,"R");?> type="checkbox" id="thursday" name="thursday" value="Thursday">
         
         <label for="friday">Friday</label>
-        <input type="checkbox" id="friday" name="friday" value="Friday">
+        <input <?php setDaysChecked($campDaysWeekVal,"F");?> type="checkbox" id="friday" name="friday" value="Friday">
         
         <label for="saturday">Saturday</label>
-        <input type="checkbox" id="saturday" name="saturday" value="Saturday">
+        <input <?php setDaysChecked($campDaysWeekVal,"U");?> type="checkbox" id="saturday" name="saturday" value="Saturday">
         </div><br>
 
         <label for="camp_visible">If the camp is searchable:</label>
         <select id="camp_visible" name="camp_visible">
-            <option value="0">Hidden</option>
             <option value="1" selected>Shown</option>
+            <option <?php if(isset($_POST['camp_visible']) and $_POST['camp_visible'] == 0) echo " selected ";  ?> value="0">Hidden</option>
         </select><br>
 
         <label for="website_link">Website:</label>
         <?php if($webErr != '') echo "<span style='color:red;'>$webErr</span><br>" ?>
-        <input type="website" id="website_link" name="website_link" ><br>
+        <input <?php if (!empty($_POST['website_link'])) echo " value = ".$_POST['website_link']." "; ?>type="website" id="website_link" name="website_link" ><br>
 
 
         <label for="overnight">Camp has Overnight options:</label>
         <select id="overnight" name="overnight">
             <option value="0" selected>No Overnight</option>
-            <option value="1" >Yes Overnight</option>
+            <option value="1" <?php if(isset($_POST['overnight']) and $_POST['overnight']=="1") echo " selected "; ?>>Yes Overnight</option>
         </select><br>
 
 
