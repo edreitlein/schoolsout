@@ -33,6 +33,9 @@ TODO:
 
              Auto-pop hours-duration by start_time - end_time❗
 
+    SEARCH: Protect search fields from xxs and sqlInject with input trimming via htmlspecialchars, no regex needed since it will not be uploaded
+    
+
     DATABASE: 
     
                 Add day/night camp delination, ✅
@@ -57,11 +60,12 @@ TODO:
     
             Add day/night camp delination ✅
 
-    SEARCH: Protect search fields from xxs and sqlInject with input trimming via htmlspecialchars, no regex needed since it will not be uploaded
 
     SEARCH: Display 0.00 price as " " (empty) instead of 0.00
 
     SEARCH: Add yes/no/both for searching for parent, camp with overnight, any other that need -> see "def yesNoBoth()" in comments of "search.php"
+
+    SEARCH: 24 -> 12hr time display? Remove seconds display
 
     UPLOAD: Add fields for parental listings and day/night ✅
 

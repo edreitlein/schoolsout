@@ -243,17 +243,27 @@ function displaySearchResult($row){
         // $sql_query = "SELECT * FROM camp_info WHERE";
         // $params = "";
 
-        $name_to_search = $_GET["name"];//the name to search
-        $state_to_search = $_GET["state"];
-        $city_to_search = $_GET["city"];
-        $zipcode_to_search = $_GET["zipcode"];
-        $minPrice = $_GET['minPrice'];
-        $maxPrice = $_GET['maxPrice'];
-        $activity_to_search = $_GET["activity"];
-        $startTime = $_GET["startTime"];
-        $endTime = $_GET["endTime"];
-        $camp_start_date = $_GET["camp_start_date"];
-        $camp_end_date = $_GET["camp_end_date"];
+        function test_input($data){ //removes possibility of xss attacks server-side
+
+          $data = trim($data);
+          $data = stripslashes($data);
+          $data = strip_tags($data);
+          $data = htmlspecialchars($data);
+        
+          return $data;
+        } 
+
+        $name_to_search =     test_input($_GET["name"]);//the name to search
+        $state_to_search =    test_input($_GET["state"]);
+        $city_to_search =     test_input($_GET["city"]);
+        $zipcode_to_search =  test_input($_GET["zipcode"]);
+        $minPrice =           test_input($_GET['minPrice']);
+        $maxPrice =           test_input($_GET['maxPrice']);
+        $activity_to_search = test_input($_GET["activity"]);
+        $startTime =          test_input($_GET["startTime"]);
+        $endTime =            test_input($_GET["endTime"]);
+        $camp_start_date =    test_input($_GET["camp_start_date"]);
+        $camp_end_date =      test_input($_GET["camp_end_date"]);
         // $aftercare = $_GET["aftercare"];
         // echo $activity_to_search;
 
